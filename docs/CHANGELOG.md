@@ -2,11 +2,16 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 1 approved
+
+- The founder approved Phase 1 (Foundation) as complete.
+- Removed a stray test report file that had been committed by mistake and had failed GitHub's formatting check; its folder is now ignored.
+- Next: Phase 2 (sign-up, login and age-aware onboarding), starting with a plan for the founder's approval.
+
 ## 2026-11-22: Phase 1, step 1.8 (documentation) and Phase 1 checklist
 
 - Added `ARCHITECTURE.md`, `ENVIRONMENT_SETUP.md`, `SECURITY_PRIVACY.md` and `TESTING.md`.
 - Ran the Phase 1 completion checklist: all checks, the build, the database tests, a scan of Git history for secrets, and a package vulnerability audit. All passed.
-- Phase 1 now awaits the founder's approval.
 
 ## 2026-11-22: Phase 1, step 1.7 (automatic checks on GitHub)
 

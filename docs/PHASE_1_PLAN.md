@@ -1,6 +1,6 @@
 # Phase 1 Plan: Foundation
 
-**Status:** All eight steps are done (22 Nov 2026). **Awaiting the founder's approval that Phase 1 is complete.**
+**Status:** Complete. All eight steps are done, and the founder approved Phase 1 on 22 Nov 2026.
 
 | Step | Status |
 |------|--------|
@@ -222,8 +222,8 @@ Checked on 22 Nov 2026:
 - [x] The database is in a clean state: 0 accounts, 0 staff, sign-up for 16–17-year-olds off, migrations in step with the files in Git.
 - [x] No known vulnerabilities in the installed packages (`npm audit`).
 - [x] Docs are updated and committed.
-- [ ] **Founder:** you have seen the app, the style guide and the dashboard tables yourself.
-- [ ] **Founder:** you approve moving to Phase 2 (Auth + age-aware onboarding).
+- [ ] **Founder:** you have seen the app, the style guide and the dashboard tables yourself. (Not confirmed in the conversation. Worth doing before Phase 2 builds on them.)
+- [x] **Founder:** you approve moving to Phase 2 (Auth + age-aware onboarding). Approved 22 Nov 2026.
 
 ## Still outstanding from Phase 0 (not blocking Phase 2, but not done)
 
