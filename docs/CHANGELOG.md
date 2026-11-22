@@ -2,6 +2,14 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: BRD and PRD drafted; Phase 2 on hold
+
+- Added `BRD.md`: the Business Requirements Document. Draft for the founder's review.
+- Rewrote `PRODUCT_REQUIREMENTS.md` as a whole-product PRD (version 2.0). The Phase 2 requirements from version 1.0 are kept under new IDs; Appendix A maps old to new.
+- `PHASE_2_PLAN.md` now cites the new requirement IDs and is marked on hold until the BRD and PRD are approved.
+- Corrected `PHASE_1_PLAN.md`: legal question A7 is priority 2, not priority 1.
+- No code changed. Nothing is built.
+
 ## 2026-11-22: Phase 2 planned (not started)
 
 - Added `PRODUCT_REQUIREMENTS.md` with the requirements for accounts, login and age-aware onboarding.

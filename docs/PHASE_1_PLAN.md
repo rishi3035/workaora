@@ -234,7 +234,7 @@ Decision D-039 allowed building to start before these were finished. They remain
 - Quotes for, and then, the legal scoping consultation (D-030, `LEGAL_QUESTIONS.md`).
 - The competitor teardown and wireframes.
 
-Phase 2 builds sign-up and the age-aware onboarding. Several P1 legal questions bear directly on that design: how strong an age check must be (A3), how a guardian is verified (A2), and what may be kept after blocking an under-16 sign-up (A7). Phase 2 can build the adult path and keep minors switched off, but those answers are needed before the guardian flow is designed in detail.
+Phase 2 builds sign-up and the age-aware onboarding. Three legal questions bear directly on that design: how strong an age check must be (A3, priority 1), how a guardian is verified (A2, priority 1), and what may be kept after blocking an under-16 sign-up (A7, priority 2). Phase 2 can build the adult path and keep minors switched off, but those answers are needed before the guardian flow is designed in detail.
 
 ## Your decisions during Phase 1
 

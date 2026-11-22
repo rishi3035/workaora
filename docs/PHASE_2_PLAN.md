@@ -1,7 +1,8 @@
 # Phase 2 Plan: Accounts, Login and Age-Aware Onboarding
 
 **Status:** Proposed on 22 November 2026, awaiting founder approval. Nothing in this plan has been built.
-**What it must do:** `PRODUCT_REQUIREMENTS.md`, Phase 2 section.
+**What it must do:** `PRODUCT_REQUIREMENTS.md`, requirements FR-ACC-01 to FR-ACC-09 and FR-ONB-01.
+**On hold:** the founder asked for the BRD and PRD to be reviewed and approved before any discussion of Phase 2 (22 Nov 2026).
 **Cost:** ₹0. Every service used here has a free tier that covers development.
 **Estimate:** about 3 focused weeks, roughly 6 calendar weeks at ~20 hours a week. To be re-judged after step 2.3, once the real pace is known.
 **Builds on:** Phase 1 (complete), `PHASE_0_PLAN.md` §5, decisions D-012, D-014, D-022, D-023, D-035, D-036.
@@ -121,7 +122,7 @@ Each step ends with acceptance checks, your manual check, updated documents and 
 
 ### 2.5 Log in, log out, forgotten password
 
-- **Acceptance:** the journeys in requirements R4 and R5 work; wrong details give one identical message; a reset link works once; end-to-end tests cover them.
+- **Acceptance:** the journeys in requirements FR-ACC-05 and FR-ACC-06 work; wrong details give one identical message; a reset link works once; end-to-end tests cover them.
 
 ### 2.6 Onboarding and the signed-in page
 
@@ -159,7 +160,12 @@ Each step ends with acceptance checks, your manual check, updated documents and 
   - A review of what lands in logs and error messages, to confirm no email, password or date of birth appears.
   - Clean-up of unfinished sign-ups (D-050): a scheduled job that deletes accounts still `pending_age` or `onboarding` after 7 days.
   - Documents updated: `DATABASE_SCHEMA.md`, `SECURITY_PRIVACY.md`, `TESTING.md`, `ARCHITECTURE.md`, `ENVIRONMENT_SETUP.md`.
-- **Acceptance:** the "done" list in `PRODUCT_REQUIREMENTS.md` passes, and you have walked through each journey yourself.
+- **Acceptance:** every acceptance criterion in FR-ACC-01 to FR-ACC-09 and FR-ONB-01 passes, the five journeys below work end to end, and you have walked through each yourself.
+  1. An adult signs up with email, confirms it, completes onboarding, logs out, logs in again, and resets their password.
+  2. An adult signs up with Google and completes onboarding.
+  3. A person who gives an under-18 date of birth is stopped at the first screen and nothing is stored.
+  4. A person who gives an under-18 date after creating an account has that account deleted.
+  5. Every forbidden case has a passing test.
 
 ## Phase 2 is complete when
 
