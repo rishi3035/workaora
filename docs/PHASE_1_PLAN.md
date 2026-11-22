@@ -1,6 +1,6 @@
 # Phase 1 Plan: Foundation
 
-**Status:** Approved by the founder on 22 Nov 2026. In progress.
+**Status:** All eight steps are done (22 Nov 2026). **Awaiting the founder's approval that Phase 1 is complete.**
 
 | Step | Status |
 |------|--------|
@@ -11,7 +11,7 @@
 | 1.5 First database migrations | Done 22 Nov 2026 |
 | 1.6 Design direction and design system | Done 22 Nov 2026 |
 | 1.7 Automatic checks on GitHub (CI) | Done 22 Nov 2026 |
-| 1.8 Documentation | Partly done as each step finished; the rest is not started |
+| 1.8 Documentation | Done 22 Nov 2026 |
 
 **Cost:** ₹0. Everything runs on your computer or on free tiers. Nothing is hosted publicly (D-032).
 **Estimate:** about 3 focused weeks, roughly 5–6 calendar weeks at ~20 hours/week. Most of your time goes on reviewing, learning and checking, not typing code.
@@ -202,16 +202,39 @@ Each step ends with acceptance checks. The step is done only when they all pass 
 
 - **What:** create `docs/ARCHITECTURE.md`, `ENVIRONMENT_SETUP.md` (how to set up a fresh machine from scratch), `DATABASE_SCHEMA.md`, `SECURITY_PRIVACY.md` (with the permission test matrix), and `TESTING.md`. Update `README.md` and `CHANGELOG.md`.
 - **Acceptance:** you can follow `ENVIRONMENT_SETUP.md` to understand how the project runs.
+- **Result (22 Nov 2026):** done.
+  - **New:** `ARCHITECTURE.md`, `ENVIRONMENT_SETUP.md`, `SECURITY_PRIVACY.md` (with the permission test matrix and an honest list of what is missing), `TESTING.md`.
+  - **Written in earlier steps:** `DATABASE_SCHEMA.md` (step 1.5), `DESIGN_SYSTEM.md` (step 1.6).
+  - **Not written, on purpose:**
+    - `PRODUCT_REQUIREMENTS.md`. `PHASE_0_PLAN.md` §9.4 listed it for Phase 1. Its content today would only repeat §2 and §4 of that plan. It is better written at the start of Phase 2, scoped to the features being built next.
+    - `API_DOCUMENTATION.md`. There is no web API yet. The database functions are documented in `DATABASE_SCHEMA.md`.
+    - `DEPLOYMENT.md` and the runbooks. Nothing is hosted yet. They are due in Phases 8 and 10.
+  - **Not yet tested:** nobody has followed `ENVIRONMENT_SETUP.md` on a genuinely fresh computer. It was written from the steps actually taken on the founder's machine.
 
 ## Phase 1 is complete when
 
-- [ ] All step acceptance checks pass.
-- [ ] `npm run check` and `npm run build` pass locally and on GitHub.
-- [ ] All permission tests pass against `dev`.
-- [ ] No secret value appears anywhere in Git history (checked with a secret scan).
-- [ ] You have seen the app, the style guide and the dashboard tables yourself.
-- [ ] Docs are updated and committed.
-- [ ] You approve moving to Phase 2 (Auth + age-aware onboarding).
+Checked on 22 Nov 2026:
+
+- [x] All step acceptance checks pass.
+- [x] `npm run check` and `npm run build` pass locally and on GitHub. 71 tests pass; GitHub shows a green tick.
+- [x] All permission tests pass against `dev`. 28 database tests pass.
+- [x] No secret value appears anywhere in Git history. All 15 commits at the time were scanned for the real keys and for key-shaped text; no `.env` or recovery-code file was ever committed.
+- [x] The database is in a clean state: 0 accounts, 0 staff, sign-up for 16–17-year-olds off, migrations in step with the files in Git.
+- [x] No known vulnerabilities in the installed packages (`npm audit`).
+- [x] Docs are updated and committed.
+- [ ] **Founder:** you have seen the app, the style guide and the dashboard tables yourself.
+- [ ] **Founder:** you approve moving to Phase 2 (Auth + age-aware onboarding).
+
+## Still outstanding from Phase 0 (not blocking Phase 2, but not done)
+
+Decision D-039 allowed building to start before these were finished. They remain open:
+
+- Interviews with hirers, talent, esports people and parents (`PHASE_0_PLAN.md` §8.1).
+- The manual concierge hiring test (§8.2).
+- Quotes for, and then, the legal scoping consultation (D-030, `LEGAL_QUESTIONS.md`).
+- The competitor teardown and wireframes.
+
+Phase 2 builds sign-up and the age-aware onboarding. Several P1 legal questions bear directly on that design: how strong an age check must be (A3), how a guardian is verified (A2), and what may be kept after blocking an under-16 sign-up (A7). Phase 2 can build the adult path and keep minors switched off, but those answers are needed before the guardian flow is designed in detail.
 
 ## Your decisions during Phase 1
 

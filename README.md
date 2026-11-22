@@ -2,7 +2,9 @@
 
 An India-first, work-first professional network and hiring platform for the creator economy and esports industry.
 
-**Status:** Phase 1 (Foundation) in progress. The app is an empty skeleton with a placeholder page. Validation and legal review are still outstanding (see D-039).
+**Status:** Phase 1 (Foundation) is built and awaiting the founder's approval. The app has a placeholder home page, a design system, a development database with its first three tables, and automatic checks. It has no user-facing features yet. Validation and legal review are still outstanding (see D-039).
+
+**New to the project?** Start with [docs/ENVIRONMENT_SETUP.md](docs/ENVIRONMENT_SETUP.md), then [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Run it on your computer
 
@@ -37,13 +39,17 @@ The checks run after the upload, so run `npm run check` yourself first. The data
 |----------|----------------|
 | [docs/PHASE_1_PLAN.md](docs/PHASE_1_PLAN.md) | The current phase: steps, acceptance checks and progress |
 | [docs/PHASE_0_PLAN.md](docs/PHASE_0_PLAN.md) | Business analysis, MVP scope, architecture, data and security model, roadmap, budget, validation plan |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How the app is put together, the folder map, and the rules that keep it safe and tidy |
+| [docs/ENVIRONMENT_SETUP.md](docs/ENVIRONMENT_SETUP.md) | Setting up a computer from nothing, everyday commands, troubleshooting |
+| [docs/SECURITY_PRIVACY.md](docs/SECURITY_PRIVACY.md) | What protects the app, how each protection is tested, and what is still missing |
+| [docs/TESTING.md](docs/TESTING.md) | The checks, how to run them, and what they do and do not prove |
 | [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) | How Workaora looks: colours, fonts, components, and what was checked for accessibility |
 | [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) | The tables that exist, who can do what, and how to change the database safely |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Every important decision, its status and history |
 | [docs/LEGAL_QUESTIONS.md](docs/LEGAL_QUESTIONS.md) | Questions for qualified Indian counsel |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | What changed, and when |
 
-More documents (architecture, database schema, environment setup, testing, security and privacy) are added in Phase 1. See PHASE_0_PLAN §9.4.
+Still to come: product requirements (start of Phase 2), deployment guide and runbooks (Phases 8 and 10). See PHASE_0_PLAN §9.4.
 
 ## Ground rules
 

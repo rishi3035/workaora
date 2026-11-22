@@ -2,6 +2,12 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 1, step 1.8 (documentation) and Phase 1 checklist
+
+- Added `ARCHITECTURE.md`, `ENVIRONMENT_SETUP.md`, `SECURITY_PRIVACY.md` and `TESTING.md`.
+- Ran the Phase 1 completion checklist: all checks, the build, the database tests, a scan of Git history for secrets, and a package vulnerability audit. All passed.
+- Phase 1 now awaits the founder's approval.
+
 ## 2026-11-22: Phase 1, step 1.7 (automatic checks on GitHub)
 
 - Added `.github/workflows/ci.yml`: formatting, lint, type-check, tests and a production build on every upload to `main` and every pull request.
