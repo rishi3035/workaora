@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-type DirectionId = "studio" | "arena" | "signal";
+type DirectionId = "studio" | "arena" | "signal" | "mix";
 type Mode = "light" | "dark";
 
 const DIRECTIONS: {
@@ -54,6 +54,19 @@ const DIRECTIONS: {
     watchOut:
       "The closest to products people already know, so the least distinctive on first glance.",
   },
+  {
+    id: "mix",
+    letter: "D",
+    name: "Your mix",
+    idea: "Studio's fonts and colours, with Arena's shapes.",
+    firstMode: "light",
+    feels:
+      "Still editorial and work-first, but a little sharper and more structured than Studio.",
+    strongFor:
+      "The same people as Studio. The coloured edge on each card adds some of Arena's energy.",
+    watchOut:
+      "The red edge appears on every card, so the red is used more often than in Studio.",
+  },
 ];
 
 const TILES = [
@@ -75,7 +88,7 @@ export function DirectionExplorer({
 }: {
   fontVariables: string;
 }) {
-  const [directionId, setDirectionId] = useState<DirectionId>("studio");
+  const [directionId, setDirectionId] = useState<DirectionId>("mix");
   const [mode, setMode] = useState<Mode>("light");
 
   const direction =

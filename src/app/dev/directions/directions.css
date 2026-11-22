@@ -60,6 +60,7 @@
 
 .dx-switch {
   display: inline-flex;
+  flex-wrap: wrap;
   border: 1px solid #555;
   border-radius: 8px;
   overflow: hidden;
@@ -92,7 +93,8 @@
 
 /* ---------- Tokens: Direction A, Studio ---------- */
 
-.dx[data-direction="studio"] {
+.dx[data-direction="studio"],
+.dx[data-direction="mix"] {
   --dx-font-display:
     var(--font-bricolage), var(--font-devanagari), var(--font-tamil), Georgia,
     serif;
@@ -112,7 +114,8 @@
   --dx-space: 28px;
 }
 
-.dx[data-direction="studio"][data-mode="light"] {
+.dx[data-direction="studio"][data-mode="light"],
+.dx[data-direction="mix"][data-mode="light"] {
   --dx-bg: #faf7f2;
   --dx-surface: #ffffff;
   --dx-text: #1b1a17;
@@ -132,7 +135,8 @@
   --dx-tone-3-text: #ffffff;
 }
 
-.dx[data-direction="studio"][data-mode="dark"] {
+.dx[data-direction="studio"][data-mode="dark"],
+.dx[data-direction="mix"][data-mode="dark"] {
   --dx-bg: #141311;
   --dx-surface: #1c1a17;
   --dx-text: #f2eee6;
@@ -785,4 +789,34 @@
 .dx[data-direction="signal"] .dx-btn-secondary {
   border-color: var(--dx-border);
   background: var(--dx-surface);
+}
+
+/* ---------- Direction D, the founder's mix ----------
+ * Studio's fonts and colours (shared above) with Arena's shapes:
+ * slightly rounded corners, soft outlines, and a coloured bar on the
+ * left edge of every card.
+ */
+
+.dx[data-direction="mix"] {
+  --dx-radius: 4px;
+  --dx-radius-pill: 4px;
+  --dx-border-width: 1px;
+  --dx-space: 24px;
+}
+
+.dx[data-direction="mix"][data-mode="light"] {
+  --dx-border: #ddd6ca;
+}
+
+.dx[data-direction="mix"][data-mode="dark"] {
+  --dx-border: #35312b;
+}
+
+.dx[data-direction="mix"] .dx-intro {
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--dx-text);
+}
+
+.dx[data-direction="mix"] .dx-card {
+  border-left: 3px solid var(--dx-accent);
 }
