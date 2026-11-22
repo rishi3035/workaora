@@ -7,7 +7,7 @@
 | 1.1 Create the Next.js app | Done 22 Nov 2026 |
 | 1.2 Code-quality tools | Done 22 Nov 2026 |
 | 1.3 Project structure and security guard-rails | Done 22 Nov 2026 |
-| 1.4 Supabase development project | Next (needs the founder) |
+| 1.4 Supabase development project | In progress: prepared; waiting for the founder to create the project |
 | 1.5–1.8 | Not started |
 
 **Cost:** ₹0. Everything runs on your computer or on free tiers. Nothing is hosted publicly (D-032).
@@ -83,7 +83,7 @@ Each step ends with acceptance checks. The step is done only when they all pass 
   - **Error messages never show a setting's value.** Tests check this.
   - **Extra lint rules:** only `src/lib/supabase/` may create database connections; screen files (`.tsx`) may never import the admin connection; settings may only be read through `src/lib/env/`.
   - **Tripwire tests** (`src/lib/security-guards.test.ts`) fail if the server-only lock is removed, if Git stops ignoring `.env` files, or if the settings template gains a real value.
-  - **New keys only (D-040, proposed).** The app accepts Supabase's new key format (`sb_publishable_…`, `sb_secret_…`) and refuses the old `anon`/`service_role` keys, which Supabase is retiring by the end of 2026.
+  - **New keys only (D-040, accepted).** The app accepts Supabase's new key format (`sb_publishable_…`, `sb_secret_…`) and refuses the old `anon`/`service_role` keys, which Supabase is retiring by the end of 2026.
   - **Consequence:** from this step, `npm run dev` refuses to start until `.env.local` exists (step 1.4). `npm run check` and `npm run build` work without it.
   - **Not done here:** the request proxy that refreshes login cookies. It belongs with sign-in in Phase 2.
 
@@ -97,6 +97,12 @@ Each step ends with acceptance checks. The step is done only when they all pass 
   4. Run `npx supabase login` (opens the browser) and `npx supabase link`.
 - **Acceptance:** a check script confirms the app can reach the dev database. `git status` shows `.env.local` is **not** tracked.
 - **You'll learn:** what a hosted database is; the dev vs prod separation (D-004).
+- **Prepared (22 Nov 2026):**
+  - The Supabase command-line tool (version 3.2) is installed as a project tool, and `supabase/config.toml` exists.
+  - `npm run test:db` runs the database tests in `tests/db/`. The first three check that the project address and publishable key are accepted, that the secret key is accepted for an admin-only request, and that the publishable key is **refused** for the same request. They only read; they change nothing.
+  - An empty `.env.local` was created from the template. Git ignores it.
+  - A bug was fixed: a blank setting was reported twice (once as missing, once as wrongly shaped). It is now reported once, and a test covers it.
+- **Still to do:** the founder creates the account and project and pastes the three values; then `npm run test:db` must pass, and the command-line tool is logged in and linked.
 
 ### 1.5 First database migrations
 

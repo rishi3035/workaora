@@ -19,6 +19,7 @@ Open a terminal in this folder (`C:\dev\workaora`), then:
 | `npm run typecheck` | Checks that the TypeScript types are consistent |
 | `npm run test` | Runs the automated tests once |
 | `npm run test:watch` | Re-runs tests automatically as files change |
+| `npm run test:db` | Runs the database tests against the **development** database. Needs `.env.local` and an internet connection. Not part of `npm run check`. |
 | `npm run build` | Builds the production version, to prove it compiles |
 
 ## Documentation

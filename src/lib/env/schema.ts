@@ -24,7 +24,16 @@ const requiredText = z
   .trim()
   .min(1, { error: "is missing." });
 
+/**
+ * A blank value is already reported as "is missing", so the detailed
+ * checks below skip it. Otherwise one mistake would be reported twice.
+ */
+const isBlank = (value: string) => value === "";
+
 function isAllowedSupabaseUrl(value: string): boolean {
+  if (isBlank(value)) {
+    return true;
+  }
   let url: URL;
   try {
     url = new URL(value);
@@ -42,6 +51,9 @@ const publicEnvSchema = z.object({
   }),
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: requiredText.superRefine(
     (value, ctx) => {
+      if (isBlank(value)) {
+        return;
+      }
       if (value.startsWith(SECRET_PREFIX)) {
         ctx.addIssue({
           code: "custom",
@@ -63,6 +75,9 @@ const publicEnvSchema = z.object({
 
 const serverEnvSchema = z.object({
   SUPABASE_SECRET_KEY: requiredText.superRefine((value, ctx) => {
+    if (isBlank(value)) {
+      return;
+    }
     if (value.startsWith(PUBLISHABLE_PREFIX)) {
       ctx.addIssue({
         code: "custom",

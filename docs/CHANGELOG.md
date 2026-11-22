@@ -2,6 +2,13 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 1, step 1.4 preparation (development database)
+
+- D-040 (new Supabase keys only) accepted.
+- Added the Supabase command-line tool and `supabase/config.toml`.
+- Added `npm run test:db` with three read-only connection tests.
+- Fixed blank settings being reported twice.
+
 ## 2026-11-22: Phase 1, step 1.3 (structure and security guard-rails)
 
 - Added three database connection modules: browser, server and admin. The admin one is locked to server code.

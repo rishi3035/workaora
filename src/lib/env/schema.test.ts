@@ -160,6 +160,39 @@ describe("error messages never reveal setting values", () => {
   });
 });
 
+describe("a settings file that exists but has not been filled in", () => {
+  // This is exactly what .env.local looks like right after copying .env.example.
+  test("reports each blank setting once, not twice", () => {
+    const publicError = (() => {
+      try {
+        parsePublicEnv({
+          NEXT_PUBLIC_SUPABASE_URL: "",
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "",
+        });
+      } catch (error) {
+        return error;
+      }
+    })();
+    const serverError = (() => {
+      try {
+        parseServerEnv({ SUPABASE_SECRET_KEY: "" });
+      } catch (error) {
+        return error;
+      }
+    })();
+
+    expect(publicError).toBeInstanceOf(EnvError);
+    expect((publicError as EnvError).problems).toEqual([
+      "NEXT_PUBLIC_SUPABASE_URL is missing.",
+      "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY is missing.",
+    ]);
+    expect(serverError).toBeInstanceOf(EnvError);
+    expect((serverError as EnvError).problems).toEqual([
+      "SUPABASE_SECRET_KEY is missing.",
+    ]);
+  });
+});
+
 describe("combining problems from several checks", () => {
   test("one error can list problems from both sets of settings", () => {
     const error = new EnvError([
