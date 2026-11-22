@@ -11,7 +11,7 @@ Open a terminal in this folder (`C:\dev\workaora`), then:
 | Command | What it does |
 |---------|--------------|
 | `npm install` | Downloads the packages the app needs (first time, or after `package.json` changes) |
-| `npm run dev` | Starts the app at http://localhost:3000. Press Ctrl+C to stop. |
+| `npm run dev` | Starts the app at http://localhost:3000. Press Ctrl+C to stop. **Needs `.env.local`** (copy `.env.example` and fill it in); without it the app stops and tells you what is missing. |
 | `npm run check` | **Runs every check below in one go. Run this before saving work to Git.** |
 | `npm run format` | Tidies the code layout automatically |
 | `npm run format:check` | Reports files whose layout isn't tidy, without changing them |
@@ -35,7 +35,9 @@ More documents (architecture, database schema, environment setup, testing, secur
 
 ## Ground rules
 
-- Never commit secrets: `.env` files, API keys, service-role keys, recovery codes.
+- Never commit secrets: `.env` files, API keys, secret keys, recovery codes.
+- `.env.local` holds keys for the **development** database only. Production keys never go on this computer.
+- Database connections are created only in `src/lib/supabase/`. The admin connection is for server code only.
 - Every database change is a migration file in `supabase/migrations/`.
 - Every feature ships with tests, including permission tests.
 - Important decisions are logged in `docs/DECISIONS.md` before they are implemented.

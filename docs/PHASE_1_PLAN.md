@@ -6,8 +6,9 @@
 |------|--------|
 | 1.1 Create the Next.js app | Done 22 Nov 2026 |
 | 1.2 Code-quality tools | Done 22 Nov 2026 |
-| 1.3 Project structure and security guard-rails | Next |
-| 1.4–1.8 | Not started |
+| 1.3 Project structure and security guard-rails | Done 22 Nov 2026 |
+| 1.4 Supabase development project | Next (needs the founder) |
+| 1.5–1.8 | Not started |
 
 **Cost:** ₹0. Everything runs on your computer or on free tiers. Nothing is hosted publicly (D-032).
 **Estimate:** about 3 focused weeks, roughly 5–6 calendar weeks at ~20 hours/week. Most of your time goes on reviewing, learning and checking, not typing code.
@@ -72,6 +73,19 @@ Each step ends with acceptance checks. The step is done only when they all pass 
   - we deliberately import the admin module into browser code and the build **fails**, then we revert;
   - starting without `.env.local` gives a clear error, not a crash.
 - **You'll learn:** public vs secret keys, and what "server-side" means.
+- **Result (22 Nov 2026):** done. 31 automated tests pass.
+  - **Three connections** in `src/lib/supabase/`: `browser.ts`, `server.ts`, `admin.ts`.
+  - **Admin lock, proven two ways.** A page that imported the admin connection into browser code was added on purpose. Lint refused it, and the build failed with "'server-only' cannot be imported from a Client Component module". The page was then removed.
+  - **Settings check, proven three ways** by starting the app:
+    1. With no settings: it stopped and listed all three missing settings, with how to fix them.
+    2. With a secret key pasted into a browser-visible setting: it stopped and said to remove and replace the key.
+    3. With correctly shaped (fake) settings: it started and served the page.
+  - **Error messages never show a setting's value.** Tests check this.
+  - **Extra lint rules:** only `src/lib/supabase/` may create database connections; screen files (`.tsx`) may never import the admin connection; settings may only be read through `src/lib/env/`.
+  - **Tripwire tests** (`src/lib/security-guards.test.ts`) fail if the server-only lock is removed, if Git stops ignoring `.env` files, or if the settings template gains a real value.
+  - **New keys only (D-040, proposed).** The app accepts Supabase's new key format (`sb_publishable_…`, `sb_secret_…`) and refuses the old `anon`/`service_role` keys, which Supabase is retiring by the end of 2026.
+  - **Consequence:** from this step, `npm run dev` refuses to start until `.env.local` exists (step 1.4). `npm run check` and `npm run build` work without it.
+  - **Not done here:** the request proxy that refreshes login cookies. It belongs with sign-in in Phase 2.
 
 ### 1.4 Supabase development project
 
@@ -79,7 +93,7 @@ Each step ends with acceptance checks. The step is done only when they all pass 
 - **You do (I guide you click by click):**
   1. Create a Supabase account (sign in with GitHub). You accept their terms yourself.
   2. Create a project named `workaora-dev`, region **Mumbai** if offered. Let Supabase generate a strong database password and **save it in a password manager**.
-  3. Copy the project URL and keys into `.env.local` yourself. I will never print secret values in chat or logs.
+  3. Copy `.env.example` to `.env.local`, then paste in the project URL, the publishable key and the secret key yourself. I will never print secret values in chat or logs.
   4. Run `npx supabase login` (opens the browser) and `npx supabase link`.
 - **Acceptance:** a check script confirms the app can reach the dev database. `git status` shows `.env.local` is **not** tracked.
 - **You'll learn:** what a hosted database is; the dev vs prod separation (D-004).

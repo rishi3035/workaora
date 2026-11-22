@@ -59,6 +59,7 @@ Full reasoning is in `PHASE_0_PLAN.md` (section numbers in brackets). Legal poin
 | D-037 | Budget may exceed ₹3 lakh because of D-012: enable minors when funds allow, seek legal clinics, defer non-essentials | Accepted |
 | D-038 | Brand name **Workaora**; domain `workaora.co.in` | Accepted |
 | D-039 | Start ₹0-cost foundation work before validation completes; gates for spending, minors and launch unchanged | Accepted |
+| D-040 | Use only Supabase's new publishable and secret keys; refuse the old anon/service_role keys | Proposed |
 
 ---
 
@@ -345,6 +346,15 @@ Options:
 **Risk accepted:** building before evidence could mean rework if validation shifts the wedge.
 **Mitigation:** the first phases (foundation, auth, age-aware onboarding, profiles, portfolio) are needed whichever audience we start with. Wedge-specific choices (role taxonomy, job templates, marketing copy) stay easy to change.
 
+### D-040 · New Supabase keys only · **Proposed**
+- **What:** the app accepts only Supabase's new key format: a publishable key (`sb_publishable_…`) for the browser and a secret key (`sb_secret_…`) for the server. It refuses the old `anon` and `service_role` keys at start-up.
+- **Why:**
+  - Supabase's documentation says the old keys are being retired by the end of 2026 (exact date not published). Building on them now would mean a forced change within weeks.
+  - Supabase rejects the new secret key if it is ever used from a browser, which is an extra safety net.
+- **Setting names:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`.
+- **Status note:** implemented in Phase 1 step 1.3 as the safe default. Awaiting founder confirmation.
+- **Source:** https://supabase.com/docs/guides/getting-started/api-keys (checked 22 Nov 2026).
+
 ---
 
 ## Change history
@@ -355,3 +365,4 @@ Options:
 | 2026-11-22 | D-001–D-011, D-013–D-021 accepted (some modified); D-012 rejected and replaced; D-022–D-037 added as Proposed | Founder review round 1 |
 | 2026-11-22 | D-022–D-037 accepted as proposed; D-037 resolved as options (a)+(b)+(d) | Founder review round 2 |
 | 2026-11-22 | D-038 (Workaora) and D-039 (₹0 foundation work before validation) accepted; D-021 path set to `C:\dev\workaora` | Founder instruction after choosing the name |
+| 2026-11-22 | D-040 (new Supabase keys only) added as Proposed | Supabase is retiring the old keys by end of 2026 |

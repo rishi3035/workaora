@@ -2,6 +2,16 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 1, step 1.3 (structure and security guard-rails)
+
+- Added three database connection modules: browser, server and admin. The admin one is locked to server code.
+- Added a settings check that stops the app at start-up, with a plain-language message, if a setting is missing or wrong.
+- Added `.env.example` (names only) and tripwire tests for the safety rules.
+- Added lint rules that keep database connections and settings access in one place.
+- Added `src/features/` and `src/ui/` with their conventions.
+- New packages: `@supabase/supabase-js`, `@supabase/ssr`, `zod`, `server-only`.
+- `npm run dev` now needs `.env.local` (created in step 1.4).
+
 ## 2026-11-22: Phase 1, step 1.2 (code-quality tools)
 
 - Added Prettier (formatting), Vitest and React Testing Library (tests).
