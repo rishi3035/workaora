@@ -66,6 +66,26 @@ describe("browser-safe settings", () => {
     },
   );
 
+  test.each([
+    "https://abcdefghijklmnop.supabase.co/rest/v1/",
+    "https://abcdefghijklmnop.supabase.co/auth/v1",
+    "https://abcdefghijklmnop.supabase.co/?x=1",
+  ])("rejects an address with extra parts after the host: %s", (longUrl) => {
+    const message = messageFrom(() =>
+      parsePublicEnv({ ...validPublic, NEXT_PUBLIC_SUPABASE_URL: longUrl }),
+    );
+    expect(message).toContain("must be only the project address");
+  });
+
+  test("accepts the address with or without a final slash", () => {
+    for (const url of [VALID_URL, `${VALID_URL}/`]) {
+      expect(
+        parsePublicEnv({ ...validPublic, NEXT_PUBLIC_SUPABASE_URL: url })
+          .NEXT_PUBLIC_SUPABASE_URL,
+      ).toBe(url);
+    }
+  });
+
   test("refuses a secret key in a browser-visible setting", () => {
     const message = messageFrom(() =>
       parsePublicEnv({

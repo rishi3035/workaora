@@ -44,11 +44,32 @@ function isAllowedSupabaseUrl(value: string): boolean {
   return url.protocol === "https:" || (url.protocol === "http:" && isLocal);
 }
 
+/**
+ * The address must stop at the project name. Supabase's dashboard also shows
+ * longer addresses (for example ending in /rest/v1/), which do not work here.
+ */
+function hasNothingAfterTheHost(value: string): boolean {
+  if (isBlank(value) || !isAllowedSupabaseUrl(value)) {
+    return true; // Already reported by an earlier check.
+  }
+  const url = new URL(value);
+  return (
+    (url.pathname === "/" || url.pathname === "") &&
+    url.search === "" &&
+    url.hash === ""
+  );
+}
+
 const publicEnvSchema = z.object({
-  NEXT_PUBLIC_SUPABASE_URL: requiredText.refine(isAllowedSupabaseUrl, {
-    error:
-      "must be a full https:// address, like https://your-project.supabase.co",
-  }),
+  NEXT_PUBLIC_SUPABASE_URL: requiredText
+    .refine(isAllowedSupabaseUrl, {
+      error:
+        "must be a full https:// address, like https://your-project.supabase.co",
+    })
+    .refine(hasNothingAfterTheHost, {
+      error:
+        "must be only the project address, with nothing after it. Remove everything after .supabase.co (for example /rest/v1/).",
+    }),
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: requiredText.superRefine(
     (value, ctx) => {
       if (isBlank(value)) {
