@@ -2,7 +2,7 @@
 
 An India-first, work-first professional network and hiring platform for the creator economy and esports industry.
 
-**Status:** Phase 1 (Foundation) is complete and approved (22 Nov 2026). Phase 2 (sign-up, login and age-aware onboarding) is planned but on hold: the BRD and PRD are drafted and must be reviewed and approved by the founder first. Nothing in Phase 2 is built. The app has a placeholder home page, a design system, a development database with its first three tables, and automatic checks. It has no user-facing features yet. Validation and legal review are still outstanding (see D-039).
+**Status:** Phase 1 (Foundation) is complete and approved (22 Nov 2026). Phase 2 (sign-up, login and age-aware onboarding) is planned: the BRD and PRD are drafted. The app features an interactive working prototype on the homepage showcasing the Creator Studio, Manager Hub, and multi-profile workflows, alongside the design system, development database with its first three tables, and automatic checks. Validation and legal review are outstanding (see D-039).
 
 **New to the project?** Start with [docs/ENVIRONMENT_SETUP.md](docs/ENVIRONMENT_SETUP.md), then [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 

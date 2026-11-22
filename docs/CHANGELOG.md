@@ -2,6 +2,16 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Interactive Working Prototype & Multi-Profile Architecture
+
+- Built the interactive working prototype in `src/app/prototype-app.tsx` mounted at `/`.
+- Implemented the Homepage Role Gateway with two distinct workspaces:
+  - **Creator / Talent Studio**: Full portfolio management, live "+ Add New Portfolio Work" dialog, project editing/deletion, transparent rate card adjustment, and live update broadcasting.
+  - **Manager / Agency Hub**: Multi-creator discovery feed across N creators (Aman Sharma, Rhea Sen, Kabir Joshi, Priya Nair), live broadcast tracking, role filtering, candidate shortlisting, and separate creator page deep-linking.
+- Integrated bilateral Confirmed Collaborations (Rule D-010) and DPDP explicit contact sharing requests (Rule D-009).
+- Clean discovery feed with D-007 "Appreciate" reaction signal and age-gate simulator (D-046/D-047).
+- Updated documentation and verified all 71 unit tests, typechecks, and formatting checks pass.
+
 ## 2026-11-22: BRD and PRD drafted; Phase 2 on hold
 
 - Added `BRD.md`: the Business Requirements Document. Draft for the founder's review.
