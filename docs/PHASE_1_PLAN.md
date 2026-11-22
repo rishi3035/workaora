@@ -5,8 +5,9 @@
 | Step | Status |
 |------|--------|
 | 1.1 Create the Next.js app | Done 22 Nov 2026 |
-| 1.2 Code-quality tools | Next |
-| 1.3–1.8 | Not started |
+| 1.2 Code-quality tools | Done 22 Nov 2026 |
+| 1.3 Project structure and security guard-rails | Next |
+| 1.4–1.8 | Not started |
 
 **Cost:** ₹0. Everything runs on your computer or on free tiers. Nothing is hosted publicly (D-032).
 **Estimate:** about 3 focused weeks, roughly 5–6 calendar weeks at ~20 hours/week. Most of your time goes on reviewing, learning and checking, not typing code.
@@ -47,6 +48,14 @@ Each step ends with acceptance checks. The step is done only when they all pass 
 - **Why:** it catches mistakes before they reach users. AI-written code needs this safety net as much as human code does.
 - **Acceptance:** `npm run check` passes. A deliberately broken test makes it fail, then we fix it.
 - **You'll learn:** how to read a test, and what "type-check" means.
+- **Result (22 Nov 2026):** done.
+  - Prettier 3 (with Tailwind class sorting), Vitest 5 and React Testing Library are set up.
+  - `npm run check` runs format check → lint → type-check → tests, and stops at the first failure.
+  - First tests (`src/app/page.test.tsx`): the home page shows the Workaora heading and the "in development" notice.
+  - Proof it catches mistakes: the heading was deliberately misspelt, the test failed with exit code 1, and it passed again once restored.
+  - A real setup bug was also found and fixed: tests were not cleaning up after each other (`vitest.setup.ts` now does this).
+  - `@types/node` was raised to version 26 to match the installed Node.js, which resolved a package version clash without forcing it.
+  - Markdown files are excluded from auto-formatting, so the planning documents keep their hand-written layout.
 
 ### 1.3 Project structure and security guard-rails
 

@@ -1,0 +1,9 @@
+# Generated or third-party files
+.next/
+node_modules/
+coverage/
+package-lock.json
+next-env.d.ts
+
+# Written by hand as documents, or rewritten by Next.js itself
+*.md

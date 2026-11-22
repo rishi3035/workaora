@@ -12,8 +12,13 @@ Open a terminal in this folder (`C:\dev\workaora`), then:
 |---------|--------------|
 | `npm install` | Downloads the packages the app needs (first time, or after `package.json` changes) |
 | `npm run dev` | Starts the app at http://localhost:3000. Press Ctrl+C to stop. |
+| `npm run check` | **Runs every check below in one go. Run this before saving work to Git.** |
+| `npm run format` | Tidies the code layout automatically |
+| `npm run format:check` | Reports files whose layout isn't tidy, without changing them |
 | `npm run lint` | Checks the code for common mistakes |
 | `npm run typecheck` | Checks that the TypeScript types are consistent |
+| `npm run test` | Runs the automated tests once |
+| `npm run test:watch` | Re-runs tests automatically as files change |
 | `npm run build` | Builds the production version, to prove it compiles |
 
 ## Documentation

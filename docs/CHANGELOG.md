@@ -2,6 +2,13 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 1, step 1.2 (code-quality tools)
+
+- Added Prettier (formatting), Vitest and React Testing Library (tests).
+- Added the first two tests, for the home page.
+- New commands: `npm run check` (everything), `npm run test`, `npm run test:watch`, `npm run format`, `npm run format:check`.
+- Raised `@types/node` to version 26 to match Node.js 26.
+
 ## 2026-11-22: Phase 1, step 1.1 (app skeleton)
 
 - Phase 1 plan approved (`docs/PHASE_1_PLAN.md`).
