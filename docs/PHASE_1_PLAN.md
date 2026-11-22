@@ -7,8 +7,9 @@
 | 1.1 Create the Next.js app | Done 22 Nov 2026 |
 | 1.2 Code-quality tools | Done 22 Nov 2026 |
 | 1.3 Project structure and security guard-rails | Done 22 Nov 2026 |
-| 1.4 Supabase development project | In progress: prepared; waiting for the founder to create the project |
-| 1.5–1.8 | Not started |
+| 1.4 Supabase development project | Done 22 Nov 2026 |
+| 1.5 First database migrations | Next |
+| 1.6–1.8 | Not started |
 
 **Cost:** ₹0. Everything runs on your computer or on free tiers. Nothing is hosted publicly (D-032).
 **Estimate:** about 3 focused weeks, roughly 5–6 calendar weeks at ~20 hours/week. Most of your time goes on reviewing, learning and checking, not typing code.
@@ -102,7 +103,18 @@ Each step ends with acceptance checks. The step is done only when they all pass 
   - `npm run test:db` runs the database tests in `tests/db/`. The first three check that the project address and publishable key are accepted, that the secret key is accepted for an admin-only request, and that the publishable key is **refused** for the same request. They only read; they change nothing.
   - An empty `.env.local` was created from the template. Git ignores it.
   - A bug was fixed: a blank setting was reported twice (once as missing, once as wrongly shaped). It is now reported once, and a test covers it.
-- **Still to do:** the founder creates the account and project and pastes the three values; then `npm run test:db` must pass, and the command-line tool is logged in and linked.
+- **Result (22 Nov 2026):** done.
+  - **Development project:** `workaora-dev-mumbai`, region `ap-south-1` (Mumbai), project reference `aysjinjtabhgozxxffwa`, Postgres 17, Free plan.
+  - **`npm run test:db` passes 3 of 3** against it.
+  - **The app starts** with the real settings and serves the page.
+  - **The command-line tool is logged in and linked** to the project. `npx supabase migration list --remote` reaches the database and reports no migrations yet. It did not need the database password; it uses the login.
+  - **`.env.local` is not tracked by Git** (checked before every commit).
+  - **Region correction.** The first project (`workaora-dev`) was created in Seoul (`ap-northeast-2`). A region cannot be changed later, so the founder chose to recreate the project in Mumbai while it was still empty. The Seoul project is to be deleted by the founder.
+  - **Two fixes from real use:**
+    1. The settings check now rejects a project address with anything after the host (the dashboard shows it ending in `/rest/v1/`), and says what to remove.
+    2. The start-up check moved into `src/instrumentation-node.ts`, which removed a Next.js warning.
+  - **Wording to know:** the command-line tool calls any online project "production" in its messages. For us, the linked project is the **development** database. There is no production database yet.
+  - **Windows note:** PowerShell on the founder's machine blocks `npm` and `npx` scripts, so use `npm.cmd` and `npx.cmd` (see README).
 
 ### 1.5 First database migrations
 
@@ -115,6 +127,7 @@ Each step ends with acceptance checks. The step is done only when they all pass 
   | `app_settings` | Server-side switches, e.g. `minors_signup_enabled = false` (D-022) | RLS on. Readable by the server; writable by staff only. |
 
   Plus the helper function `is_staff()`, used by every later permission rule.
+- **Dev-only guard:** the database tests will refuse to run unless `.env.local` points at the registered development project (`aysjinjtabhgozxxffwa`), so tests that create and delete data can never touch a production database (D-004).
 - **Permission tests** (run against `dev` with temporary test users that are deleted afterwards). Each one *tries* the forbidden action and checks that it fails:
   - an anonymous visitor cannot read `staff` or `audit_log`;
   - a normal user cannot make themselves staff;

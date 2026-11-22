@@ -2,6 +2,14 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 1, step 1.4 complete (development database connected)
+
+- Development project `workaora-dev-mumbai` created by the founder in Mumbai (`ap-south-1`), replacing a first project that had been created in Seoul.
+- Connection tests pass; the app starts with real settings; the Supabase command-line tool is logged in and linked.
+- The settings check now rejects a project address with extra parts on the end.
+- The start-up check moved to `src/instrumentation-node.ts`.
+- README: Windows PowerShell note (`npm.cmd`, `npx.cmd`).
+
 ## 2026-11-22: Phase 1, step 1.4 preparation (development database)
 
 - D-040 (new Supabase keys only) accepted.
