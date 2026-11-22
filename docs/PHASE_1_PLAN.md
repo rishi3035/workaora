@@ -10,7 +10,7 @@
 | 1.4 Supabase development project | Done 22 Nov 2026 |
 | 1.5 First database migrations | Done 22 Nov 2026 |
 | 1.6 Design direction and design system | Done 22 Nov 2026 |
-| 1.7 Automatic checks on GitHub (CI) | Next |
+| 1.7 Automatic checks on GitHub (CI) | Done 22 Nov 2026 |
 | 1.8 Documentation | Partly done as each step finished; the rest is not started |
 
 **Cost:** ₹0. Everything runs on your computer or on free tiers. Nothing is hosted publicly (D-032).
@@ -185,6 +185,18 @@ Each step ends with acceptance checks. The step is done only when they all pass 
 - **Database tests in CI:** **not in Phase 1.** Running them on GitHub would mean storing the dev project's secret key in GitHub. Instead, permission tests run on your machine before each commit, and we revisit this in Phase 2 (see Open questions).
 - **Cost:** private repositories get a free monthly Actions allowance. Our usage should stay well inside it. I'll verify the current allowance before enabling it.
 - **Acceptance:** a green tick on GitHub for the latest commit. A deliberately failing check shows a red cross.
+- **Result (22 Nov 2026):** done.
+  - **Workflow:** `.github/workflows/ci.yml`, named "Checks". It runs `npm run check` and then `npm run build` on every upload to `main`, on every pull request, and when started by hand from the Actions tab.
+  - **Green tick:** the first run passed in 54 seconds.
+  - **Red cross, proven:** on a temporary branch the home page heading was misspelt. The run failed at the test step with "Unable to find an accessible element with the role heading and name Workaora". The branch was then deleted. It was never merged.
+  - **No secrets on GitHub.** The workflow uses none, and it can only read the code.
+  - **Pinned actions.** The two official GitHub actions it uses are fixed to exact versions, so they cannot be silently replaced.
+  - **Node.js version** is recorded in `.nvmrc` (26), so GitHub uses the same major version as the founder's computer.
+  - **Cost:** GitHub Free includes about 2,000 minutes a month for private repositories on standard Linux machines (checked 22 Nov 2026; GitHub now states it as $12 of included usage). At about one minute a run, normal use stays far inside it.
+  - **Limits to know:**
+    1. The checks run after an upload. They report a problem; they do not stop a bad upload to `main`. Blocking it needs GitHub's branch protection, which for private repositories needs a paid GitHub plan.
+    2. The database tests still run only on the founder's computer (see Open questions).
+    3. Nothing updates the pinned action versions or the npm packages automatically yet.
 
 ### 1.8 Documentation
 

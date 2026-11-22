@@ -2,6 +2,12 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 1, step 1.7 (automatic checks on GitHub)
+
+- Added `.github/workflows/ci.yml`: formatting, lint, type-check, tests and a production build on every upload to `main` and every pull request.
+- Added `.nvmrc` and an `engines` entry so every machine uses Node.js 26.
+- Proved the checks fail on a deliberately broken branch, then deleted the branch.
+
 ## 2026-11-22: Phase 1, step 1.6 (design system)
 
 - Visual direction chosen by the founder: Studio's fonts and colours with Arena's shapes (D-044).

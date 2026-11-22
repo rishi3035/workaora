@@ -25,6 +25,12 @@ Open a terminal in this folder (`C:\dev\workaora`), then:
 | `npm run db:types` | Regenerates the TypeScript descriptions of the database tables. Run after every database change. |
 | `npm run build` | Builds the production version, to prove it compiles |
 
+## Automatic checks on GitHub
+
+Every upload to `main` is checked on GitHub: formatting, lint, type-check, tests and a production build. See the **Actions** tab of the repository. A green tick means all passed; a red cross means something needs fixing.
+
+The checks run after the upload, so run `npm run check` yourself first. The database tests (`npm run test:db`) do not run on GitHub.
+
 ## Documentation
 
 | Document | What it covers |
