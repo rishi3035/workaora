@@ -597,9 +597,103 @@ All are **Must before under-18 sign-up is enabled**. All are subject to legal si
 **FR-MIN-05 · Must before under-18 sign-up is enabled · Child-safety handling**
 - **Acceptance:** child-safety reports reach a priority queue with a written escalation procedure, including when authorities must be told (E2).
 
-### 5.18 Later (`LAT`)
+### 5.18 Social Discovery Feed (`FEED`) · Core Expansion
 
-Not requirements. Listed so they are not forgotten: direct messaging; communities; posts and comments; saved items; recruiter filters; analytics for profiles; native apps; video hosting; paid tiers; brand marketplace; contracts and payments; matching.
+**FR-FEED-01 · Must · Instagram/LinkedIn-Style Creator Discovery Feed**
+- **Story:** As a creator or hiring manager, I want to scroll an engaging work discovery feed so that I can see the latest creative drops, video projects, thumbnails, and 3D renders from across India's creator economy.
+- **Acceptance:**
+  1. The feed displays a chronological/ranked stream of creative work drops from verified creators.
+  2. Each post card highlights the creator's avatar, name, handle, role/category badge, and timestamp.
+  3. Media preview supports rich visual formats: 16:9 widescreen video embeds, 9:16 Shorts/Reels preview frames, 1:1 square artwork, and high-res thumbnails.
+  4. Performance proof tags accompany drops (e.g., "68% 30s Retention", "1.4M Organic Views", "Verified Collab with @TechnoGamerz").
+  5. Category filter pills allow one-tap filtering: All Drops, Video & VFX, Thumbnails & Art, Esports & Motion, Audio & Scripts.
+
+**FR-FEED-02 · Must · Interactive Engagement: Likes, Impression Counters & Threaded Comments**
+- **Story:** As a creator or manager, I want to like, view, and comment on creators' work drops to engage with the community and initiate talent conversations.
+- **Acceptance:**
+  1. **Like Counter:** One-click like button with optimistic local UI state update, incrementing/decrementing count and turning crimson on active like.
+  2. **Impression/View Telemetry:** Realistic aggregate views counter displayed on every post card (e.g., "2.4k views", "890 views").
+  3. **Threaded Comments:** Expandable comment section showing existing peer reviews, creator-to-creator notes, and inbound manager outreach inquiries.
+  4. **Active Comment Submission:** Text input allows logged-in users to type and submit a comment immediately, appending it to the post's comment thread with timestamp and author role badge.
+
+**FR-FEED-03 · Must · Creator "Publish to Feed" Flow**
+- **Story:** As a creator, I want to publish my latest project or portfolio piece to the social feed so that peers and managers discover my capabilities.
+- **Acceptance:**
+  1. Quick post-composer or "Share Work Drop" modal accessible from the feed header.
+  2. Creator selects project title, description/caption, media preview URL, category, client collaboration tag, and retention/view metrics badge.
+  3. On submit, post immediately prepends to the community feed and updates the creator's personal showcase.
+
+---
+
+### 5.19 Custom Creator Pages & Portfolio Builder (`PAGE`) · Core Expansion
+
+**FR-PAGE-01 · Must · Personalized Creator Homepage & Slug (`workaora.com/@handle`)**
+- **Story:** As a creator, I want a bespoke, customizable homepage and portfolio so that I have a professional destination to send clients and managers instead of fragmented links.
+- **Acceptance:**
+  1. Every creator has a unique public vanity URL: `workaora.com/@handle`.
+  2. The page functions as a self-contained, branded portfolio highlighting bio, headline, verified skills, aggregate metrics, and showcased media.
+  3. Includes a sticky or prominent "Book / Hire Creator" CTA that triggers DPDP-compliant direct contact sharing or instant booking inquiry.
+
+**FR-PAGE-02 · Must · Aesthetic Theming Engine & Template Presets**
+- **Story:** As a creator, I want to pick a visual template and accent colors that match my creative identity without writing CSS.
+- **Acceptance:**
+  1. Creators can choose from 4 preset design themes:
+     - **Cyberpunk / Esports Neon:** Deep slate background (`#090d16`), vibrant cyan/violet highlights, high-energy gaming vibe.
+     - **Minimalist Studio:** Crisp monochrome editorial layout, stone borders, understated luxury aesthetic.
+     - **Vibrant Gold:** Energetic warm amber/gold tones tailored for lifestyle, entertainment, and top-tier vlog editors.
+     - **Hyper-Dark Grid:** Obsidian black (`#050505`), electric emerald accents, high-contrast monospace technical grid.
+  2. Creators can select custom accent colors (Electric Cyan, Neon Violet, Emerald Green, Amber Gold, Rose Crimson).
+  3. Theme styles instantly reflect across hero banners, borders, buttons, and media highlights.
+
+**FR-PAGE-03 · Must · Multiple Layout Modes (Masonry, Cinema, Case Studies)**
+- **Story:** As a creator, I want to present my work in the layout best suited to my specialty (e.g. art vs video vs editing metrics).
+- **Acceptance:**
+  1. **Masonry Gallery:** Responsive multi-column grid displaying thumbnails, digital art, photos, and graphic stills with lightbox expansion.
+  2. **Cinema Showreel:** Prominent widescreen 16:9 spotlight video player with chapter/timecode breakdowns and software tools used.
+  3. **Case Study Cards:** Detailed analytical cards showcasing client challenge, retention graphs, role breakdown, and verified client testimonials.
+
+**FR-PAGE-04 · Must · Visual In-App Page Customizer**
+- **Story:** As a creator in Creator Studio, I want a live visual editor where I can preview and tweak my page settings in real time.
+- **Acceptance:**
+  1. Instant live preview toggles between editing controls and final public appearance.
+  2. Controls include theme picker, accent palette, layout mode, custom tagline, banner background style, and visibility toggles (rate card, verified metrics).
+  3. "Save Page Customization" persists changes to creator state; "View Live Page" opens the standalone public creator storefront.
+
+---
+
+### 5.20 Platform-Managed Technical Setup (`INFRA`) · Core Expansion
+
+**FR-INFRA-01 · Must · Zero-Config Edge Hosting & Subdomain Routing**
+- **Story:** As a creator, I want my custom page to be online instantly without purchasing hosting, configuring Cloudflare/Vercel DNS, or setting up servers.
+- **Acceptance:**
+  1. Platform automatically routes `workaora.com/@handle` with zero manual DNS setup.
+  2. Edge server dynamically serves creator pages with sub-300ms time-to-first-byte (TTFB) across Indian ISPs (Jio, Airtel, Vi, ACT).
+
+**FR-INFRA-02 · Must · Automated Media Transcoding & Global Edge CDN**
+- **Story:** As a visitor viewing high-resolution art or videos on 4G/5G mobile, I want pages to load instantly without buffering.
+- **Acceptance:**
+  1. Images are automatically served in modern formats (WebP/AVIF) with responsive srcset breakpoints.
+  2. Video thumbnails and previews load from Mumbai and Delhi edge PoP caches.
+  3. Total page payload for custom creator portfolios remains under 2.5MB on initial load.
+
+**FR-INFRA-03 · Must · Dynamic OpenGraph & Social Sharing Meta**
+- **Story:** As a creator sharing my Workaora link on WhatsApp, LinkedIn, Discord, or X, I want rich preview cards with my headline and verified badges.
+- **Acceptance:**
+  1. Platform automatically pre-renders dynamic OpenGraph meta tags (`og:title`, `og:image`, `og:description`).
+  2. Social crawlers receive pre-baked snapshot cards featuring creator avatar, top metric, and headline.
+
+**FR-INFRA-04 · Must · Zero-Config Privacy-First Telemetry**
+- **Story:** As a creator, I want to know how many clients and managers viewed my custom page without installing Google Analytics or dealing with cookie consent banners.
+- **Acceptance:**
+  1. Platform captures edge server visits, unique manager views, and CTA button clicks natively.
+  2. Metrics display in Creator Studio ("342 Views this week", "87% Mobile traffic", "14 Profile Clicks").
+  3. 100% DPDP-compliant: strictly zero tracking of personal identifiers, IP anonymization, and zero third-party tracking scripts.
+
+---
+
+### 5.21 Later (`LAT`)
+
+Not requirements for current milestone. Listed so they are not forgotten: direct messaging; real-time chat; escrow milestone contracts and UPI payouts; native mobile apps (iOS/Android); self-hosted video streaming CDN; automated AI portfolio tagging.
 
 ---
 

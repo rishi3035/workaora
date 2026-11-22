@@ -656,3 +656,65 @@ Open questions O1 to O9 (section 12.4), research questions M1 to M7 (section 7.3
 | 5 | **Approve the success measures and their definitions**, including what counts as a hire (sections 5.2 and 15.3). | Without agreed definitions, the closed beta cannot be judged, and Gate 2 and Gate 3 have nothing to test against. | Accept the proposed measures; replace them; defer. | Accept the definitions now; treat the target numbers as provisional until the pilot gives real figures. |
 
 Also worth deciding soon: whether 16–17-year-olds are enabled before or after the closed beta (O5), and what the spending ceiling is given the estimate's upper end (O8).
+
+---
+
+## 19. Strategic Expansion: Social Discovery Feed, Custom Creator Pages & Platform-Managed Infrastructure
+
+### 19.1 Strategic Pillars Overview (Approved Product Direction)
+
+To ensure Workaora evolves beyond a purely transactional hiring directory into the daily operating system and discovery layer for India's creator economy, three foundational pillars expand the product surface:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                           WORKAORA PLATFORM ECOSYSTEM                           │
+├───────────────────────────────┬─────────────────────────────────────────────────┤
+│    1. SOCIAL DISCOVERY FEED   │ 2. CUSTOM CREATOR PAGES & PORTFOLIO BUILDER    │
+│    (Instagram/LinkedIn Style) │ (No-Code Personal Storefront & Showcase)        │
+│                               │                                                 │
+│ • Real-time Work Drops & Art  │ • Unique Slugs: workaora.com/@handle            │
+│ • Proof Badges (Retention/AVD)│ • Distinctive Templates (Cyberpunk, Minimalist, │
+│ • Interactive Likes & Views   │   Vibrant Creator Gold, Hyper-Dark Grid)        │
+│ • Threaded Creator Comments   │ • Custom Layouts (Masonry, Cinema, Case Studies)│
+│ • "Publish to Feed" Workflow  │ • Direct "Book / Hire Me" Conversion Drawer     │
+├───────────────────────────────┴─────────────────────────────────────────────────┤
+│                   3. PLATFORM-MANAGED TECHNICAL INFRASTRUCTURE                  │
+│                   (Zero-Config Hosting, CDN & Performance)                      │
+│                                                                                 │
+│ • Zero DNS, server, or SSL setup required from creators                         │
+│ • Automated India-edge CDN (Mumbai & Delhi PoPs, sub-300ms latency)             │
+│ • Lossless image & video transcoding (WebP/AVIF auto-pipeline)                  │
+│ • Built-in DPDP-compliant analytics (profile views, CTR, engagement)            │
+│ • Dynamic OpenGraph cards for WhatsApp, Twitter, and Discord sharing            │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 19.2 Pillar 1: Social Discovery Feed (Community & Discovery Engine)
+- **The Problem:** Traditional hiring marketplaces suffer from low daily active usage (DAU/MAU); creators only log in when desperately seeking a gig, and managers only log in when hiring.
+- **The Solution:** An Instagram/LinkedIn-style work discovery feed where creators showcase recent edits, thumbnail concepts, 3D renders, and stream graphics.
+- **Key Engagement Loops:**
+  1. **Work Drops:** Creators publish portfolio snippets and project breakdowns with live performance proof (e.g. "68% 30s Retention", "1.4M Organic Views").
+  2. **Interactivity:** Real-time Likes, Impression/View counters, and Threaded Comments between creators and talent managers.
+  3. **Organic Discovery & Inbound Leads:** Managers scrolling the feed can immediately click "Hire Creator" or "View Full Portfolio" directly from an impressive work drop.
+
+### 19.3 Pillar 2: Custom Creator Pages (Bespoke Portfolio & Homepage)
+- **The Problem:** Creators currently maintain fragmented links: Linktree for links, Google Drive for raw video files, Behance for art, and Twitter for proof. These links are unbranded, slow, and lack conversion mechanics.
+- **The Solution:** Every creator on Workaora receives a dedicated, customizable personal homepage and portfolio (`workaora.com/@handle`).
+- **Creator Expression & Customization Controls:**
+  - **Themes & Aesthetics:** Instant switching between curated aesthetic templates:
+    - *Cyberpunk Esports:* Slate-black background, neon cyan/violet accents, high-energy gaming vibe.
+    - *Minimalist Studio:* Monochrome crisp editorial layout, stone borders, understated luxury.
+    - *Vibrant Gold:* Amber/warm highlights, high-energy entertainment and lifestyle creator aesthetic.
+    - *Hyper-Dark Grid:* Deep obsidian black, neon emerald accents, tech-forward monospace grid.
+  - **Layout Modes:** Masonry Gallery (art, thumbnails, stills), Cinema Showreel (widescreen hero video spotlight), and Case Study Cards (retention analytics + before/after breakdowns).
+  - **Conversion-Ready:** Prominent rate cards, verified turnaround SLAs, and DPDP-compliant direct contact dispatch buttons.
+
+### 19.4 Pillar 3: Platform-Managed Technical Setup (Infrastructure Abstraction)
+- **The Problem:** Creators are visual storytellers, not DevOps engineers. Setting up custom websites requires purchasing domains, configuring Cloudflare/Vercel DNS, SSL certificates, responsive HTML/CSS, and media compression.
+- **The Solution:** Workaora completely abstracts the technical layer behind the scenes:
+  - **Instant Slug Routing:** Instant provision of `workaora.com/@handle` or custom vanity domains with zero DNS friction.
+  - **Global Media CDN:** Edge-accelerated asset delivery across India (Mumbai & Delhi PoPs), ensuring video showreels and high-res art load in under 300ms on mobile connections.
+  - **Automated Transcoding:** Automatic conversion of images to WebP/AVIF and video streaming optimization.
+  - **Dynamic OpenGraph Meta:** Automated generation of rich preview cards when links are shared on WhatsApp, LinkedIn, X, or Discord.
+  - **Zero-Config Analytics:** Real-time traffic, profile views, and manager engagement statistics delivered natively without third-party tracking scripts.
+

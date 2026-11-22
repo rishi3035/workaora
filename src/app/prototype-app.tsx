@@ -5,302 +5,19 @@ import { Avatar } from "@/ui/avatar";
 import { Badge } from "@/ui/badge";
 import { Button } from "@/ui/button";
 import { Card } from "@/ui/card";
-import { Checkbox } from "@/ui/checkbox";
 import { Dialog, DialogContent } from "@/ui/dialog";
-import { Field, Input, Select, Textarea } from "@/ui/field";
-import { AlertIcon, CheckIcon, CloseIcon, InfoIcon } from "@/ui/icons";
+import { Field, Input, Select } from "@/ui/field";
 import { ToastProvider, useToast } from "@/ui/toast";
-
-// --- CORE TYPES ---
-export type WorkspaceRole = "gateway" | "creator" | "manager" | "org";
-
-export type PortfolioItem = {
-  id: string;
-  title: string;
-  category: string;
-  views: string;
-  retention: string;
-  role: string;
-  tools: string[];
-  turnaround: string;
-  thumbnailUrl: string;
-  dateAdded: string;
-  confirmedCollab?: {
-    channelName: string;
-    verifiedDate: string;
-  };
-  appreciateCount: number;
-};
-
-export type CreatorProfile = {
-  id: string;
-  name: string;
-  handle: string;
-  avatar: string;
-  category:
-    | "Video Editing"
-    | "Thumbnail Design"
-    | "Scriptwriting"
-    | "Motion Graphics"
-    | "Esports";
-  headline: string;
-  location: string;
-  languages: string[];
-  experienceYears: number;
-  rates: {
-    primaryRate: string;
-    primaryUnit: string;
-    retainerRate?: string;
-    turnaround: string;
-    revisions: string;
-  };
-  bio: string;
-  lastUpdated: string;
-  latestUpdateNote: string;
-  works: PortfolioItem[];
-  contactDetails: {
-    whatsapp: string;
-    email: string;
-    discord?: string;
-  };
-};
-
-export type Opportunity = {
-  id: string;
-  title: string;
-  creatorOrg: string;
-  rate: string;
-  rateType: string;
-  turnaround: string;
-  category: string;
-  applicantsCount: number;
-};
-
-// --- INITIAL CREATORS SEED DATA ---
-const INITIAL_CREATORS: CreatorProfile[] = [
-  {
-    id: "creator-1",
-    name: "Aman Sharma",
-    handle: "@aman_edits",
-    avatar: "AS",
-    category: "Video Editing",
-    headline: "Senior Video Editor & Retention Pacing Specialist",
-    location: "Mumbai, India (Remote)",
-    languages: ["Hindi", "English"],
-    experienceYears: 4,
-    rates: {
-      primaryRate: "₹3,500",
-      primaryUnit: "per long-form video (8–15 min)",
-      retainerRate: "₹40,000 / month (10 videos)",
-      turnaround: "48 hours",
-      revisions: "2 rounds free",
-    },
-    bio: "Pacing-driven video editor specialized in long-form YouTube essays, comedic timing, and multi-track audio leveling with 20M+ cumulative views.",
-    lastUpdated: "10 mins ago",
-    latestUpdateNote:
-      "Added new 1.4M view esports documentary cut & updated turn-around to 48h.",
-    contactDetails: {
-      whatsapp: "+91 98765 43210",
-      email: "aman.edits@example.com",
-      discord: "aman_cuts#1234",
-    },
-    works: [
-      {
-        id: "work-1",
-        title: "1M+ Views Pacing Edit: Inside India's Mobile Esports Scene",
-        category: "Long-form YouTube Documentary",
-        views: "1.4M views",
-        retention: "64% 30s Retention",
-        role: "Lead Editor & Story Pacer",
-        tools: ["Premiere Pro", "After Effects", "Sound Design"],
-        turnaround: "48 Hours",
-        thumbnailUrl:
-          "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
-        dateAdded: "Yesterday",
-        confirmedCollab: {
-          channelName: "S8UL Gaming",
-          verifiedDate: "Oct 2026",
-        },
-        appreciateCount: 142,
-      },
-      {
-        id: "work-2",
-        title: "High-Retention Cut: The Untold Story of India's UPI Revolution",
-        category: "Finance Breakdown",
-        views: "890K views",
-        retention: "59% Average View Duration",
-        role: "Motion Graphics & Editor",
-        tools: ["After Effects", "Illustrator"],
-        turnaround: "4 Days",
-        thumbnailUrl:
-          "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-        dateAdded: "3 days ago",
-        confirmedCollab: {
-          channelName: "Tanmay Bhat Productions",
-          verifiedDate: "Sep 2026",
-        },
-        appreciateCount: 98,
-      },
-    ],
-  },
-  {
-    id: "creator-2",
-    name: "Rhea Sen",
-    handle: "@rhea_thumbnails",
-    avatar: "RS",
-    category: "Thumbnail Design",
-    headline: "Esports 3D Thumbnail Designer & Asset Illustrator",
-    location: "Bengaluru, India (Remote)",
-    languages: ["English", "Hindi", "Bengali"],
-    experienceYears: 3,
-    rates: {
-      primaryRate: "₹1,800",
-      primaryUnit: "per 3D rendered thumbnail",
-      retainerRate: "₹30,000 / month (20 thumbnails)",
-      turnaround: "12–24 hours",
-      revisions: "Unlimited text/color tweaks",
-    },
-    bio: "High CTR thumbnail artist creating clickable 3D character poses in Blender with dynamic rim lighting for tier-1 gaming channels.",
-    lastUpdated: "1 hour ago",
-    latestUpdateNote: "Uploaded BGMI World Invitational 14.2% CTR thumbnail.",
-    contactDetails: {
-      whatsapp: "+91 98450 11223",
-      email: "rhea.design@example.com",
-      discord: "rhea_art#9901",
-    },
-    works: [
-      {
-        id: "work-r1",
-        title: "14.2% CTR BGMI World Invitational Click-Magnet",
-        category: "3D Blender + Photoshop",
-        views: "850K Views (14.2% CTR)",
-        retention: "Tested across 3 A/B Variants",
-        role: "3D Posing & Lighting Artist",
-        tools: ["Blender 3D", "Photoshop"],
-        turnaround: "12 Hours",
-        thumbnailUrl:
-          "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80",
-        dateAdded: "Today",
-        confirmedCollab: {
-          channelName: "S8UL Esports",
-          verifiedDate: "Nov 2026",
-        },
-        appreciateCount: 312,
-      },
-      {
-        id: "work-r2",
-        title: "Valorant Radiant Rank Push: High-Contrast Lighting",
-        category: "Gaming Thumbnail",
-        views: "620K Views (11.8% CTR)",
-        retention: "Clean CTR lift",
-        role: "Character Extraction",
-        tools: ["Photoshop", "Lightroom"],
-        turnaround: "18 Hours",
-        thumbnailUrl:
-          "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=800&q=80",
-        dateAdded: "4 days ago",
-        confirmedCollab: {
-          channelName: "GodLike Esports",
-          verifiedDate: "Aug 2026",
-        },
-        appreciateCount: 189,
-      },
-    ],
-  },
-  {
-    id: "creator-3",
-    name: "Kabir Joshi",
-    handle: "@kabir_writes",
-    avatar: "KJ",
-    category: "Scriptwriting",
-    headline: "YouTube Tech & Finance Scriptwriter (Breakdowns & Storylines)",
-    location: "Delhi NCR, India (Remote)",
-    languages: ["Hindi", "English"],
-    experienceYears: 5,
-    rates: {
-      primaryRate: "₹4,000",
-      primaryUnit: "per 10-12 min script",
-      retainerRate: "₹35,000 / month (8 scripts)",
-      turnaround: "48–72 hours",
-      revisions: "Full research revision",
-    },
-    bio: "Researched scriptwriter blending consumer psychology, structured comedic callbacks, and deep tech/finance breakdowns.",
-    lastUpdated: "5 hours ago",
-    latestUpdateNote:
-      "Published new script breakdown on smartphone display wars.",
-    contactDetails: {
-      whatsapp: "+91 98112 33445",
-      email: "kabir.scripts@example.com",
-    },
-    works: [
-      {
-        id: "work-k1",
-        title: "Smartphone Teardown: The Secret Trillion-Dollar Display War",
-        category: "Tech Deep-Dive Script",
-        views: "1.8M Views (72% Hook Retention)",
-        retention: "68% Retention through min 5",
-        role: "Lead Researcher & Scriptwriter",
-        tools: ["Notion", "Google Docs"],
-        turnaround: "48 Hours",
-        thumbnailUrl:
-          "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
-        dateAdded: "2 days ago",
-        confirmedCollab: {
-          channelName: "Tech Burner Media",
-          verifiedDate: "Sep 2026",
-        },
-        appreciateCount: 165,
-      },
-    ],
-  },
-  {
-    id: "creator-4",
-    name: "Priya Nair",
-    handle: "@priya_motion",
-    avatar: "PN",
-    category: "Motion Graphics",
-    headline: "Lead 2D/3D Motion Graphic Designer & Title Specialist",
-    location: "Hyderabad, India (Remote)",
-    languages: ["English", "Telugu", "Hindi"],
-    experienceYears: 4,
-    rates: {
-      primaryRate: "₹6,000",
-      primaryUnit: "per kinetic motion sequence",
-      retainerRate: "₹45,000 / month (Studio retainer)",
-      turnaround: "48 hours",
-      revisions: "2 review stages",
-    },
-    bio: "Kinetic motion graphic artist crafting pop-culture title sequences, character overlays, dynamic graph animations, and visual memes.",
-    lastUpdated: "Yesterday",
-    latestUpdateNote:
-      "Updated retainer availability for upcoming December creator schedules.",
-    contactDetails: {
-      whatsapp: "+91 99001 22334",
-      email: "priya.motion@example.com",
-      discord: "priya_vfx#4040",
-    },
-    works: [
-      {
-        id: "work-p1",
-        title: "Dynamic Pop-Up Meme Overlay & Animated Title Package",
-        category: "Motion Graphics & After Effects",
-        views: "3.2M Views",
-        retention: "Used across 12 episodes",
-        role: "Motion Director & Animator",
-        tools: ["After Effects", "Cinema 4D"],
-        turnaround: "3 Days",
-        thumbnailUrl:
-          "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
-        dateAdded: "5 days ago",
-        confirmedCollab: {
-          channelName: "Mythpat Studio",
-          verifiedDate: "Oct 2026",
-        },
-        appreciateCount: 275,
-      },
-    ],
-  },
-];
+import { PrototypeCustomPage } from "./prototype-custom-page";
+import { INITIAL_CREATORS, INITIAL_FEED_POSTS } from "./prototype-data";
+import { PrototypeFeed } from "./prototype-feed";
+import {
+  CreatorCustomPageConfig,
+  CreatorProfile,
+  FeedPost,
+  PortfolioItem,
+  WorkspaceRole,
+} from "./prototype-types";
 
 const DEFAULT_CREATOR: CreatorProfile = INITIAL_CREATORS[0]!;
 
@@ -315,22 +32,25 @@ export function PrototypeApp() {
 function PrototypeInner() {
   const toast = useToast();
 
-  // Active Role/Profile Mode: "gateway" (Home Switcher), "creator" (Studio), "manager" (Talent Discovery & Hiring), "org" (Brands)
+  // Active Role/Profile Mode: "gateway" (Home Switcher), "feed" (Social Feed), "creator" (Studio), "custom-page" (Personal Page), "manager" (Talent Discovery)
   const [activeRole, setActiveRole] = useState<WorkspaceRole>("gateway");
 
-  // In-Memory Shared State (Live synchronization between Creator edits and Manager discovery)
+  // In-Memory Shared State
   const [creators, setCreators] = useState<CreatorProfile[]>(INITIAL_CREATORS);
+  const [feedPosts, setFeedPosts] = useState<FeedPost[]>(INITIAL_FEED_POSTS);
 
   // In Creator Mode: which creator is logged in (default to Aman Sharma)
   const [myCreatorId, setMyCreatorId] = useState<string>("creator-1");
   const myProfile: CreatorProfile =
     creators.find((c) => c.id === myCreatorId) ?? DEFAULT_CREATOR;
 
-  // In Manager Mode: currently viewed creator's separate page (null = viewing all creators feed)
+  // Currently inspected creator for Custom Page or Details dialog
   const [inspectedCreatorId, setInspectedCreatorId] = useState<string | null>(
     null,
   );
-  const inspectedCreator = creators.find((c) => c.id === inspectedCreatorId);
+  const activeCustomPageCreator: CreatorProfile =
+    creators.find((c) => c.id === (inspectedCreatorId || myCreatorId)) ??
+    DEFAULT_CREATOR;
 
   // In Manager Mode: search and role filter
   const [managerFilter, setManagerFilter] = useState<string>("All");
@@ -372,7 +92,125 @@ function PrototypeInner() {
     useState<CreatorProfile | null>(null);
   const [contactRequestedSuccess, setContactRequestedSuccess] = useState(false);
 
-  // Open "Add Work" Modal
+  // =========================================================================
+  // SOCIAL FEED HANDLERS
+  // =========================================================================
+  const handleToggleFeedLike = (postId: string) => {
+    setFeedPosts((prev) =>
+      prev.map((post) => {
+        if (post.id !== postId) return post;
+        const willLike = !post.isLikedByUser;
+        return {
+          ...post,
+          isLikedByUser: willLike,
+          likesCount: willLike ? post.likesCount + 1 : post.likesCount - 1,
+        };
+      }),
+    );
+  };
+
+  const handleAddFeedComment = (postId: string, commentText: string) => {
+    const newComment = {
+      id: `c-${Date.now()}`,
+      authorName: myProfile.name,
+      authorHandle: myProfile.handle,
+      authorAvatar: myProfile.avatar,
+      authorRole: myProfile.headline.slice(0, 24),
+      content: commentText,
+      timestamp: "Just now",
+    };
+
+    setFeedPosts((prev) =>
+      prev.map((post) => {
+        if (post.id !== postId) return post;
+        return {
+          ...post,
+          comments: [...post.comments, newComment],
+        };
+      }),
+    );
+
+    toast.show({
+      title: "Comment posted to community feed!",
+      description: "Visible to creators and hiring managers.",
+      tone: "success",
+    });
+  };
+
+  const handleCreateFeedPost = (newPostData: {
+    caption: string;
+    mediaUrl: string;
+    category: string;
+    clientCollab?: string;
+    metricsLabel?: string;
+  }) => {
+    const newFeedPost: FeedPost = {
+      id: `post-${Date.now()}`,
+      creatorId: myProfile.id,
+      creatorName: myProfile.name,
+      creatorHandle: myProfile.handle,
+      creatorAvatar: myProfile.avatar,
+      creatorCategory: myProfile.category,
+      timestamp: "Just now",
+      caption: newPostData.caption,
+      mediaType: newPostData.category.includes("Thumb") ? "thumbnail" : "video",
+      mediaUrl: newPostData.mediaUrl,
+      mediaAspectRatio: "16:9",
+      metricsBadge: newPostData.metricsLabel
+        ? { label: newPostData.metricsLabel, iconType: "trending" }
+        : undefined,
+      clientCollab: newPostData.clientCollab,
+      likesCount: 1,
+      isLikedByUser: true,
+      viewsCount: 12,
+      comments: [],
+      tags: [
+        "#WorkDrop",
+        "#Workaora",
+        `#${myProfile.category.replace(" ", "")}`,
+      ],
+    };
+
+    setFeedPosts((prev) => [newFeedPost, ...prev]);
+    toast.show({
+      title: "Work Drop published to feed!",
+      description: "Your project is now in the community discovery stream.",
+      tone: "success",
+    });
+  };
+
+  // Open Creator's Custom Page from Feed or Manager Hub
+  const handleOpenCustomPageForCreator = (creatorId: string) => {
+    setInspectedCreatorId(creatorId);
+    setActiveRole("custom-page");
+  };
+
+  // Update Page Customization Config for a Creator
+  const handleUpdatePageConfig = (newConfig: CreatorCustomPageConfig) => {
+    setCreators((prev) =>
+      prev.map((c) =>
+        c.id === (inspectedCreatorId || myCreatorId)
+          ? { ...c, pageConfig: newConfig }
+          : c,
+      ),
+    );
+    toast.show({
+      title: "Page styling updated!",
+      description: `Template: ${newConfig.template} & Layout: ${newConfig.layoutMode}`,
+      tone: "success",
+    });
+  };
+
+  // Open Contact Request Modal
+  const handleInitiateContact = (creator: CreatorProfile) => {
+    setContactTargetCreator(creator);
+    setContactRequestedSuccess(false);
+    setContactModalOpen(true);
+  };
+
+  // =========================================================================
+  // CREATOR STUDIO HANDLERS
+  // =========================================================================
   const handleOpenAddWork = () => {
     setEditingWorkId(null);
     setFormTitle("");
@@ -387,7 +225,6 @@ function PrototypeInner() {
     setEditWorkModalOpen(true);
   };
 
-  // Open "Edit Work" Modal
   const handleOpenEditWork = (work: PortfolioItem) => {
     setEditingWorkId(work.id);
     setFormTitle(work.title);
@@ -400,7 +237,6 @@ function PrototypeInner() {
     setEditWorkModalOpen(true);
   };
 
-  // Save Portfolio Item (Add or Edit)
   const handleSaveWork = () => {
     if (!formTitle.trim()) {
       toast.show({ title: "Please enter a work title.", tone: "danger" });
@@ -413,7 +249,6 @@ function PrototypeInner() {
 
         let updatedWorks: PortfolioItem[];
         if (editingWorkId) {
-          // Edit existing
           updatedWorks = creator.works.map((w) =>
             w.id === editingWorkId
               ? {
@@ -429,7 +264,6 @@ function PrototypeInner() {
               : w,
           );
         } else {
-          // Add new
           const newWork: PortfolioItem = {
             id: `work-${Date.now()}`,
             title: formTitle,
@@ -463,12 +297,11 @@ function PrototypeInner() {
         ? "Work item updated!"
         : "New work published to portfolio!",
       description:
-        "Changes are live and immediately visible to Managers and Hirers.",
+        "Changes are live and immediately visible across the platform.",
       tone: "success",
     });
   };
 
-  // Delete Portfolio Item
   const handleDeleteWork = (workId: string) => {
     setCreators((prev) =>
       prev.map((c) =>
@@ -480,7 +313,6 @@ function PrototypeInner() {
     toast.show({ title: "Portfolio item removed.", tone: "neutral" });
   };
 
-  // Save Rate Card
   const handleSaveRateCard = () => {
     setCreators((prev) =>
       prev.map((c) =>
@@ -508,7 +340,6 @@ function PrototypeInner() {
     });
   };
 
-  // Toggle Shortlist in Manager view
   const handleToggleShortlist = (creatorId: string) => {
     setShortlistedCreatorIds((prev) =>
       prev.includes(creatorId)
@@ -550,16 +381,18 @@ function PrototypeInner() {
             <span className="text-xs font-semibold text-fg">
               {activeRole === "gateway"
                 ? "Role Gateway"
-                : activeRole === "creator"
-                  ? "Creator Studio (Portfolio & Work Owner)"
-                  : activeRole === "manager"
-                    ? "Manager Workspace (Talent Discovery & Hiring)"
-                    : "Brand & Org Hub"}
+                : activeRole === "feed"
+                  ? "Social Discovery Feed"
+                  : activeRole === "creator"
+                    ? "Creator Studio (Portfolio & Work Owner)"
+                    : activeRole === "custom-page"
+                      ? `Custom Page (@${activeCustomPageCreator.pageConfig.customSlug})`
+                      : "Manager Hub (Talent Discovery & Hiring)"}
             </span>
           </div>
 
           {/* Quick Role Switcher Buttons */}
-          <div className="flex items-center gap-1.5 rounded-md border border-line bg-sunken p-1">
+          <div className="flex flex-wrap items-center gap-1.5 rounded-md border border-line bg-sunken p-1">
             <button
               type="button"
               onClick={() => {
@@ -572,7 +405,21 @@ function PrototypeInner() {
                   : "text-muted hover:text-fg"
               }`}
             >
-              Home Gateway
+              🏠 Gateway
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveRole("feed");
+                setInspectedCreatorId(null);
+              }}
+              className={`rounded px-2.5 py-1 text-xs font-semibold transition-colors ${
+                activeRole === "feed"
+                  ? "shadow-xs text-accent-fg bg-accent"
+                  : "text-muted hover:text-fg"
+              }`}
+            >
+              ⚡ Social Feed
             </button>
             <button
               type="button"
@@ -582,11 +429,25 @@ function PrototypeInner() {
               }}
               className={`rounded px-2.5 py-1 text-xs font-semibold transition-colors ${
                 activeRole === "creator"
-                  ? "shadow-xs bg-accent text-on-accent"
+                  ? "shadow-xs text-accent-fg bg-accent"
                   : "text-muted hover:text-fg"
               }`}
             >
               🎨 Creator Studio
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveRole("custom-page");
+                setInspectedCreatorId(myCreatorId);
+              }}
+              className={`rounded px-2.5 py-1 text-xs font-semibold transition-colors ${
+                activeRole === "custom-page"
+                  ? "shadow-xs bg-surface-elevated border border-line text-fg"
+                  : "text-muted hover:text-fg"
+              }`}
+            >
+              🌐 Custom Page
             </button>
             <button
               type="button"
@@ -600,14 +461,14 @@ function PrototypeInner() {
                   : "text-muted hover:text-fg"
               }`}
             >
-              🏢 Manager Hub ({creators.length} Creators)
+              🏢 Manager Hub ({creators.length})
             </button>
           </div>
         </div>
       </header>
 
       {/* ========================================================================= */}
-      {/* 1. HOMEPAGE ROLE GATEWAY: CHOOSE WHAT PROFILE / PERSPECTIVE TO ENTER      */}
+      {/* 1. HOMEPAGE ROLE GATEWAY                                                  */}
       {/* ========================================================================= */}
       {activeRole === "gateway" && (
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-12 sm:px-6">
@@ -617,121 +478,220 @@ function PrototypeInner() {
               Select Your Profile to Enter Workspace
             </h2>
             <p className="mx-auto max-w-xl text-sm text-muted sm:text-base">
-              Workaora connects creative talent with managers and creator-led
-              studios. Experience the product from each profile&apos;s distinct
-              perspective:
+              Workaora connects creative talent, managers, and creator-led
+              studios. Experience the product from each distinct perspective:
             </p>
           </div>
 
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {/* PROFILE 1: THE CREATOR (PORTFOLIO OWNER) */}
+            {/* CARD 1: SOCIAL DISCOVERY FEED */}
             <Card
               edge="accent"
-              className="flex cursor-pointer flex-col justify-between p-7 transition-all hover:border-line-strong"
+              className="hover:shadow-lg flex cursor-pointer flex-col justify-between p-7 transition-all hover:border-line-strong"
+              onClick={() => setActiveRole("feed")}
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-xl flex size-12 items-center justify-center bg-accent/15 text-2xl font-bold text-accent">
+                      ⚡
+                    </div>
+                    <div>
+                      <h3 className="font-display text-xl font-bold">
+                        1. Social Discovery Feed
+                      </h3>
+                      <p className="text-xs text-muted">
+                        Instagram/LinkedIn-style Creator Community
+                      </p>
+                    </div>
+                  </div>
+                  <Badge tone="accent">Discovery</Badge>
+                </div>
+
+                <p className="text-xs leading-relaxed text-muted">
+                  Discover what India&apos;s top video editors, thumbnail
+                  designers, and esports creators are dropping today. Features
+                  likes, view telemetry, and interactive threaded comments.
+                </p>
+
+                <div className="rounded-lg border border-line bg-sunken p-3 text-xs text-muted">
+                  <p className="font-semibold text-fg">Interactive Features:</p>
+                  <ul className="mt-1 list-inside list-disc space-y-0.5 text-[11px]">
+                    <li>Real-time work drops with retention proof tags</li>
+                    <li>One-click likes &amp; impression view counters</li>
+                    <li>Interactive comment threads &amp; peer inquiries</li>
+                    <li>
+                      Direct &quot;⚡ Hire Creator&quot; conversion action
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center justify-between border-t border-line pt-4">
+                <span className="text-xs font-semibold text-accent">
+                  Explore Community Feed &rarr;
+                </span>
+                <span className="text-[11px] text-muted">
+                  {feedPosts.length} Live Drops
+                </span>
+              </div>
+            </Card>
+
+            {/* CARD 2: CUSTOM CREATOR PAGE BUILDER */}
+            <Card
+              edge="none"
+              className="hover:shadow-lg flex cursor-pointer flex-col justify-between p-7 transition-all hover:border-line-strong"
+              onClick={() => {
+                setInspectedCreatorId("creator-1");
+                setActiveRole("custom-page");
+              }}
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-xl bg-emerald-500/15 text-emerald-400 flex size-12 items-center justify-center text-2xl font-bold">
+                      🌐
+                    </div>
+                    <div>
+                      <h3 className="font-display text-xl font-bold">
+                        2. Custom Creator Page
+                      </h3>
+                      <p className="text-xs text-muted">
+                        Bespoke Homepage &amp; Zero-Config Hosting
+                      </p>
+                    </div>
+                  </div>
+                  <Badge tone="success">Platform-Managed</Badge>
+                </div>
+
+                <p className="text-xs leading-relaxed text-muted">
+                  Give every creator their own customizable personal homepage
+                  (e.g., <code>workaora.com/@amansharma</code>). Choose from
+                  curated themes (Cyberpunk, Minimalist, Vibrant, Hyper-Dark)
+                  and layout modes.
+                </p>
+
+                <div className="rounded-lg border border-line bg-sunken p-3 text-xs text-muted">
+                  <p className="font-semibold text-fg">
+                    Platform-Managed Infra:
+                  </p>
+                  <ul className="mt-1 list-inside list-disc space-y-0.5 text-[11px]">
+                    <li>Zero DNS or server setup required from creators</li>
+                    <li>
+                      India-edge CDN (Mumbai &amp; Delhi &lt;30ms latency)
+                    </li>
+                    <li>Auto-WebP/AVIF video and media transcoding</li>
+                    <li>Pre-rendered OpenGraph cards for WhatsApp &amp; X</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center justify-between border-t border-line pt-4">
+                <span className="text-emerald-400 text-xs font-semibold">
+                  Preview Live Custom Page &rarr;
+                </span>
+                <span className="text-[11px] text-muted">4 Theme Presets</span>
+              </div>
+            </Card>
+
+            {/* CARD 3: THE CREATOR (STUDIO MODE) */}
+            <Card
+              edge="none"
+              className="hover:shadow-lg flex cursor-pointer flex-col justify-between p-7 transition-all hover:border-line-strong"
               onClick={() => setActiveRole("creator")}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="flex size-12 items-center justify-center rounded-full bg-accent/10 text-xl font-bold text-accent">
+                    <div className="rounded-xl bg-purple-500/15 text-purple-400 flex size-12 items-center justify-center text-2xl font-bold">
                       🎨
                     </div>
                     <div>
                       <h3 className="font-display text-xl font-bold">
-                        1. Creator / Talent Profile
+                        3. Creator Studio
                       </h3>
                       <p className="text-xs text-muted">
-                        Video Editors, Thumbnail Artists, Scriptwriters
+                        Portfolio Manager, Rate Cards &amp; SLAs
                       </p>
                     </div>
                   </div>
-                  <Badge tone="accent">Studio Mode</Badge>
+                  <Badge tone="neutral">Studio</Badge>
                 </div>
 
-                <p className="text-sm leading-relaxed text-fg">
-                  Enter your private Creator Studio. Manage your live portfolio,{" "}
-                  <strong>add and edit video cuts</strong>, update retention
-                  stats, adjust your transparent rate card, and track confirmed
-                  collaborations.
+                <p className="text-xs leading-relaxed text-muted">
+                  Manage your portfolio pieces, configure transparent rate cards
+                  and turnaround SLAs, and monitor edge visits. Changes update
+                  live across the platform.
                 </p>
 
-                <div className="rounded space-y-1 border border-line bg-sunken p-3 text-xs">
-                  <strong className="block text-fg">
-                    What you can test inside:
-                  </strong>
-                  <div className="text-muted">
-                    &bull; Click &ldquo;+ Add New Work&rdquo; to publish cuts
-                  </div>
-                  <div className="text-muted">
-                    &bull; Edit titles, 30s retention %, and rates
-                  </div>
-                  <div className="text-muted">
-                    &bull; Live sync: Manager hub updates instantly!
-                  </div>
+                <div className="rounded-lg border border-line bg-sunken p-3 text-xs text-muted">
+                  <p className="font-semibold text-fg">Active Studio Data:</p>
+                  <p className="mt-1 text-[11px]">
+                    Editing as: <strong>{myProfile.name}</strong> (
+                    {myProfile.works.length} items &middot;{" "}
+                    {myProfile.rates.primaryRate})
+                  </p>
                 </div>
               </div>
 
-              <div className="mt-6 border-t border-line pt-4">
-                <Button variant="primary" className="w-full justify-between">
-                  <span>Enter Creator Studio (Manage Portfolio)</span>
-                  <span>&rarr;</span>
-                </Button>
+              <div className="mt-6 flex items-center justify-between border-t border-line pt-4">
+                <span className="text-xs font-semibold text-accent">
+                  Enter Creator Studio &rarr;
+                </span>
+                <span className="text-[11px] text-muted">
+                  Live Syncing Active
+                </span>
               </div>
             </Card>
 
-            {/* PROFILE 2: THE MANAGER / AGENCY (HIRER) */}
+            {/* CARD 4: THE MANAGER (TALENT HUB) */}
             <Card
-              edge="accent"
-              className="flex cursor-pointer flex-col justify-between p-7 transition-all hover:border-line-strong"
+              edge="none"
+              className="hover:shadow-lg flex cursor-pointer flex-col justify-between p-7 transition-all hover:border-line-strong"
               onClick={() => setActiveRole("manager")}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-xl font-bold text-fg">
+                    <div className="rounded-xl flex size-12 items-center justify-center bg-primary/10 text-2xl font-bold text-primary">
                       🏢
                     </div>
                     <div>
                       <h3 className="font-display text-xl font-bold">
-                        2. Manager / Agency Profile
+                        4. Manager Hub
                       </h3>
                       <p className="text-xs text-muted">
-                        Talent Managers, Producers, Esports Orgs
+                        Talent Discovery, Filters &amp; Direct Hiring
                       </p>
                     </div>
                   </div>
-                  <Badge tone="neutral">Recruiter Hub</Badge>
+                  <Badge tone="neutral">Hiring Hub</Badge>
                 </div>
 
-                <p className="text-sm leading-relaxed text-fg">
-                  Enter the Manager Hub. Discover{" "}
-                  <strong>N number of creators</strong> and their latest live
-                  updates, inspect their full separate portfolio pages, compare
-                  rate cards, and shortlist candidates.
+                <p className="text-xs leading-relaxed text-muted">
+                  Discover {creators.length} verified creators across Video
+                  Editing, 3D Thumbnails, Motion Graphics, and Esports
+                  Broadcasts. Review proof of work, shortlist, and request
+                  contacts.
                 </p>
 
-                <div className="rounded space-y-1 border border-line bg-sunken p-3 text-xs">
-                  <strong className="block text-fg">
-                    What you can test inside:
-                  </strong>
-                  <div className="text-muted">
-                    &bull; Browse all {creators.length} creators &amp; their
-                    latest posts
-                  </div>
-                  <div className="text-muted">
-                    &bull; Click any creator to open their separate profile page
-                  </div>
-                  <div className="text-muted">
-                    &bull; Shortlist candidates &amp; request direct contact
-                  </div>
+                <div className="rounded-lg border border-line bg-sunken p-3 text-xs text-muted">
+                  <p className="font-semibold text-fg">Manager Directives:</p>
+                  <ul className="mt-1 list-inside list-disc space-y-0.5 text-[11px]">
+                    <li>Browse creators by discipline &amp; metrics</li>
+                    <li>Shortlist candidates into hiring pipelines</li>
+                    <li>DPDP-compliant direct contact dispatch</li>
+                  </ul>
                 </div>
               </div>
 
-              <div className="mt-6 border-t border-line pt-4">
-                <Button variant="secondary" className="w-full justify-between">
-                  <span>Enter Manager Hub (Discover Creators)</span>
-                  <span>&rarr;</span>
-                </Button>
+              <div className="mt-6 flex items-center justify-between border-t border-line pt-4">
+                <span className="text-xs font-semibold text-primary">
+                  Browse {creators.length} Creators &rarr;
+                </span>
+                <span className="text-[11px] text-muted">
+                  {shortlistedCreatorIds.length} Shortlisted
+                </span>
               </div>
             </Card>
           </div>
@@ -739,558 +699,427 @@ function PrototypeInner() {
       )}
 
       {/* ========================================================================= */}
-      {/* 2. CREATOR DASHBOARD: MANAGE PORTFOLIO, ADD / EDIT WORK & RATES           */}
+      {/* 2. SOCIAL DISCOVERY FEED VIEW                                             */}
+      {/* ========================================================================= */}
+      {activeRole === "feed" && (
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6">
+          <PrototypeFeed
+            posts={feedPosts}
+            onToggleLike={handleToggleFeedLike}
+            onAddComment={handleAddFeedComment}
+            onOpenCreatorPage={handleOpenCustomPageForCreator}
+            onQuickHire={(creatorId) => {
+              const target = creators.find((c) => c.id === creatorId);
+              if (target) handleInitiateContact(target);
+            }}
+            onCreatePost={handleCreateFeedPost}
+          />
+        </main>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 3. CUSTOM CREATOR PAGE VIEW                                               */}
+      {/* ========================================================================= */}
+      {activeRole === "custom-page" && (
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6">
+          <PrototypeCustomPage
+            creator={activeCustomPageCreator}
+            isOwner={activeCustomPageCreator.id === myCreatorId}
+            onUpdateConfig={handleUpdatePageConfig}
+            onRequestContact={handleInitiateContact}
+            onBackToDirectory={() => setActiveRole("manager")}
+          />
+        </main>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 4. CREATOR STUDIO VIEW                                                    */}
       {/* ========================================================================= */}
       {activeRole === "creator" && (
-        <main className="mx-auto w-full max-w-6xl flex-1 space-y-8 px-4 py-8 sm:px-6">
-          {/* Creator Header with Switcher */}
-          <div className="flex flex-col justify-between gap-4 border-b border-line pb-6 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-4">
-              <Avatar name={myProfile.name} size="lg" />
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="font-display text-2xl font-bold">
-                    {myProfile.name}&apos;s Studio
-                  </h2>
-                  <Badge tone="accent">Creator Dashboard</Badge>
+        <main className="mx-auto w-full max-w-5xl flex-1 space-y-6 px-4 py-8 sm:px-6">
+          {/* Creator Profile Summary Bar */}
+          <Card className="p-6">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar name={myProfile.name} size="lg" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="font-display text-xl font-bold">
+                      {myProfile.name}
+                    </h2>
+                    <span className="text-xs text-muted">
+                      {myProfile.handle}
+                    </span>
+                    <Badge tone="accent">Creator Studio</Badge>
+                  </div>
+                  <p className="mt-0.5 text-xs text-muted">
+                    {myProfile.headline}
+                  </p>
+                  <p className="mt-1 text-[11px] text-muted">
+                    📍 {myProfile.location} &middot; ⏱️{" "}
+                    {myProfile.rates.turnaround} SLA
+                  </p>
                 </div>
-                <p className="text-xs text-muted">
-                  {myProfile.headline} &middot; {myProfile.location} &middot;{" "}
-                  {myProfile.works.length} Portfolio Cuts
-                </p>
-                <div className="mt-1 flex items-center gap-2 text-xs">
-                  <span className="text-muted">Active Rate:</span>
-                  <strong className="text-fg">
-                    {myProfile.rates.primaryRate}
-                  </strong>
-                  <span className="text-muted">
-                    {myProfile.rates.primaryUnit}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                {/* Switch Active Creator Persona */}
+                <div className="flex items-center gap-1 rounded-md border border-line bg-sunken p-0.5 text-xs">
+                  <span className="px-1 text-[10px] font-semibold text-muted uppercase">
+                    Persona:
                   </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFormPrimaryRate(myProfile.rates.primaryRate);
-                      setFormPrimaryUnit(myProfile.rates.primaryUnit);
-                      setFormRetainer(myProfile.rates.retainerRate || "");
-                      setFormSla(myProfile.rates.turnaround);
-                      setRateCardModalOpen(true);
-                    }}
-                    className="ml-2 font-semibold text-accent underline hover:opacity-80"
-                  >
-                    Edit Rate Card
-                  </button>
+                  {creators.map((c) => (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => {
+                        setMyCreatorId(c.id);
+                        setFormPrimaryRate(c.rates.primaryRate);
+                        setFormPrimaryUnit(c.rates.primaryUnit);
+                        setFormRetainer(c.rates.retainerRate || "");
+                        setFormSla(c.rates.turnaround);
+                      }}
+                      className={`rounded px-2 py-0.5 text-[11px] font-medium transition ${
+                        myCreatorId === c.id
+                          ? "text-accent-fg shadow-2xs bg-accent"
+                          : "text-muted hover:text-fg"
+                      }`}
+                    >
+                      {c.name.split(" ")[0]}
+                    </button>
+                  ))}
                 </div>
+
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => {
+                    setInspectedCreatorId(myCreatorId);
+                    setActiveRole("custom-page");
+                  }}
+                >
+                  🌐 View Live Custom Page
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => setRateCardModalOpen(true)}
+                >
+                  Edit Rate Card
+                </Button>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <Button variant="primary" onClick={handleOpenAddWork}>
-                + Add New Portfolio Work
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setActiveRole("manager");
-                  setInspectedCreatorId(myProfile.id);
-                }}
-              >
-                Preview as Manager &rarr;
-              </Button>
-            </div>
-          </div>
+            {/* Platform-Managed Technical Setup Status Banner */}
+            <div className="rounded-xl mt-6 border border-line bg-sunken/60 p-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="bg-emerald-500 flex h-2 w-2 animate-pulse rounded-full" />
+                    <span className="text-xs font-bold text-fg">
+                      Platform-Managed Infrastructure &amp; Edge CDN
+                    </span>
+                    <Badge tone="success">100% Zero-Config</Badge>
+                  </div>
+                  <p className="mt-1 text-[11px] text-muted">
+                    The platform abstracts all hosting, CDN transcoding, and SSL
+                    behind the scenes. No DevOps required.
+                  </p>
+                </div>
 
-          {/* Live Studio Insights Banner */}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <div className="rounded border border-line bg-surface p-4">
-              <span className="text-xs text-muted">Total Portfolio Items</span>
-              <p className="mt-1 font-display text-2xl font-bold text-fg">
-                {myProfile.works.length}
-              </p>
-            </div>
-            <div className="rounded border border-line bg-surface p-4">
-              <span className="text-xs text-muted">Turnaround SLA</span>
-              <p className="mt-1 font-display text-2xl font-bold text-fg">
-                {myProfile.rates.turnaround}
-              </p>
-            </div>
-            <div className="rounded border border-line bg-surface p-4">
-              <span className="text-xs text-muted">Confirmed Collabs</span>
-              <p className="mt-1 font-display text-2xl font-bold text-success">
-                {myProfile.works.filter((w) => w.confirmedCollab).length}{" "}
-                Verified
-              </p>
-            </div>
-            <div className="rounded border border-line bg-surface p-4">
-              <span className="text-xs text-muted">
-                Last Update Broadcasted
-              </span>
-              <p className="mt-1 truncate text-xs font-semibold text-fg">
-                {myProfile.latestUpdateNote}
-              </p>
-            </div>
-          </div>
+                <div className="flex items-center gap-2">
+                  <code className="rounded border border-line bg-surface px-2.5 py-1 font-mono text-[11px]">
+                    workaora.com/@{myProfile.pageConfig.customSlug}
+                  </code>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => {
+                      navigator.clipboard?.writeText(
+                        `https://workaora.com/@${myProfile.pageConfig.customSlug}`,
+                      );
+                      toast.show({
+                        title: "Custom link copied!",
+                        description: `https://workaora.com/@${myProfile.pageConfig.customSlug}`,
+                        tone: "success",
+                      });
+                    }}
+                  >
+                    Copy Link
+                  </Button>
+                </div>
+              </div>
 
-          {/* My Portfolio Cuts (Editable & Manageable) */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
+              <div className="mt-3 grid grid-cols-2 gap-2 border-t border-line/60 pt-3 text-[11px] text-muted sm:grid-cols-4">
+                <div>
+                  <span className="text-[10px] text-muted uppercase">
+                    Edge CDN:
+                  </span>
+                  <p className="font-semibold text-fg">Active (Mumbai bom1)</p>
+                </div>
+                <div>
+                  <span className="text-[10px] text-muted uppercase">
+                    Edge Latency:
+                  </span>
+                  <p className="text-emerald-500 font-semibold">&lt;28ms</p>
+                </div>
+                <div>
+                  <span className="text-[10px] text-muted uppercase">
+                    SSL Certificate:
+                  </span>
+                  <p className="font-semibold text-fg">TLS 1.3 Active</p>
+                </div>
+                <div>
+                  <span className="text-[10px] text-muted uppercase">
+                    Analytics (DPDP):
+                  </span>
+                  <p className="font-semibold text-fg">
+                    342 visits &middot; 48 hirers
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Portfolio Items Management Section */}
+          <Card className="p-6">
+            <div className="flex items-center justify-between border-b border-line pb-4">
               <div>
-                <h3 className="font-display text-xl font-bold">
-                  Manage Portfolio &amp; Work Samples
+                <h3 className="font-display text-base font-bold">
+                  My Portfolio Work Items ({myProfile.works.length})
                 </h3>
                 <p className="text-xs text-muted">
-                  Add new cuts, edit retention figures, or adjust thumbnails.
-                  All updates sync to Managers immediately.
+                  These verified pieces appear across the community feed, your
+                  custom homepage, and manager searches.
                 </p>
               </div>
+              <Button variant="primary" size="sm" onClick={handleOpenAddWork}>
+                + Add Work Item
+              </Button>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {myProfile.works.map((item) => (
-                <Card
-                  key={item.id}
-                  edge="accent"
-                  className="flex flex-col justify-between overflow-hidden p-0"
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {myProfile.works.map((work) => (
+                <div
+                  key={work.id}
+                  className="rounded-xl overflow-hidden border border-line bg-surface transition hover:border-line-strong"
                 >
-                  <div className="relative aspect-video w-full bg-sunken">
+                  <div className="bg-black aspect-video w-full overflow-hidden">
                     <img
-                      src={item.thumbnailUrl}
-                      alt={item.title}
+                      src={work.thumbnailUrl}
+                      alt={work.title}
                       className="h-full w-full object-cover"
                     />
-                    <div className="rounded absolute bottom-2 left-2 bg-fg/80 px-2 py-0.5 text-xs font-semibold text-bg backdrop-blur-xs">
-                      {item.views}
-                    </div>
-                    {item.retention && (
-                      <div className="rounded absolute top-2 right-2 bg-accent px-2 py-0.5 text-xs font-bold text-on-accent">
-                        {item.retention}
-                      </div>
-                    )}
                   </div>
-
-                  <div className="space-y-2 p-5">
-                    <div className="flex items-center justify-between text-xs text-muted">
-                      <span>{item.category}</span>
-                      <span>SLA: {item.turnaround}</span>
+                  <div className="space-y-2 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="rounded bg-accent/15 px-2 py-0.5 text-[10px] font-semibold text-accent">
+                        {work.category}
+                      </span>
+                      <span className="font-mono text-[10px] text-muted">
+                        {work.turnaround}
+                      </span>
                     </div>
-
-                    <h4 className="font-display text-base font-bold text-fg">
-                      {item.title}
+                    <h4 className="line-clamp-2 text-xs leading-snug font-bold">
+                      {work.title}
                     </h4>
-                    <p className="text-xs text-muted">Role: {item.role}</p>
-
-                    <div className="flex flex-wrap gap-1 pt-1">
-                      {item.tools.map((t) => (
-                        <Badge key={t} tone="neutral" className="text-xs">
-                          {t}
-                        </Badge>
-                      ))}
+                    <div className="flex items-center gap-2 text-[11px] text-muted">
+                      <span className="text-emerald-500 font-semibold">
+                        {work.retention}
+                      </span>
+                      <span>&middot;</span>
+                      <span>{work.views}</span>
                     </div>
 
-                    {item.confirmedCollab && (
-                      <div className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-success">
-                        <CheckIcon className="size-4 shrink-0" />
-                        <span>
-                          Confirmed by {item.confirmedCollab.channelName}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Edit / Delete Controls */}
-                  <div className="flex items-center justify-between border-t border-line bg-surface px-5 py-3 text-xs">
-                    <span className="text-muted">Added {item.dateAdded}</span>
-                    <div className="flex gap-2">
+                    <div className="mt-2 flex items-center justify-end gap-2 border-t border-line/60 pt-2">
                       <Button
-                        size="sm"
                         variant="secondary"
-                        onClick={() => handleOpenEditWork(item)}
+                        size="sm"
+                        onClick={() => handleOpenEditWork(work)}
                       >
                         Edit
                       </Button>
                       <Button
-                        size="sm"
                         variant="danger"
-                        onClick={() => handleDeleteWork(item.id)}
+                        size="sm"
+                        onClick={() => handleDeleteWork(work.id)}
                       >
-                        Delete
+                        Remove
                       </Button>
                     </div>
                   </div>
-                </Card>
+                </div>
               ))}
             </div>
+          </Card>
+        </main>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 5. MANAGER HUB VIEW                                                       */}
+      {/* ========================================================================= */}
+      {activeRole === "manager" && (
+        <main className="mx-auto w-full max-w-5xl flex-1 space-y-6 px-4 py-8 sm:px-6">
+          <div className="rounded-xl flex flex-col gap-4 border border-line bg-surface p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="font-display text-lg font-bold">
+                  Manager Talent Directory
+                </h2>
+                <Badge tone="neutral">
+                  {creators.length} Verified Candidates
+                </Badge>
+              </div>
+              <p className="mt-1 text-xs text-muted">
+                Review verified retention rates, turnaround SLAs, and open
+                bespoke creator portfolios.
+              </p>
+            </div>
+
+            {/* Filter Pills */}
+            <div className="flex flex-wrap items-center gap-2">
+              {[
+                "All",
+                "Video Editing",
+                "Thumbnail Design",
+                "Esports",
+                "Motion Graphics",
+              ].map((role) => (
+                <button
+                  key={role}
+                  onClick={() => setManagerFilter(role)}
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+                    managerFilter === role
+                      ? "bg-primary text-on-primary"
+                      : "bg-surface-elevated text-muted hover:text-fg"
+                  }`}
+                >
+                  {role}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Creators Grid */}
+          <div className="grid gap-6 sm:grid-cols-2">
+            {creators
+              .filter(
+                (c) => managerFilter === "All" || c.category === managerFilter,
+              )
+              .map((creator) => {
+                const isShortlisted = shortlistedCreatorIds.includes(
+                  creator.id,
+                );
+
+                return (
+                  <Card
+                    key={creator.id}
+                    className="flex flex-col justify-between p-6"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-3">
+                          <Avatar name={creator.name} size="md" />
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h3 className="font-display text-base font-bold">
+                                {creator.name}
+                              </h3>
+                              <span className="text-xs text-muted">
+                                {creator.handle}
+                              </span>
+                            </div>
+                            <p className="text-xs text-muted">
+                              {creator.category}
+                            </p>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => handleToggleShortlist(creator.id)}
+                          className={`rounded px-2.5 py-1 text-xs font-semibold transition ${
+                            isShortlisted
+                              ? "border border-success/40 bg-success-soft text-success"
+                              : "bg-surface-elevated border border-line text-muted hover:text-fg"
+                          }`}
+                        >
+                          {isShortlisted ? "✓ Shortlisted" : "+ Shortlist"}
+                        </button>
+                      </div>
+
+                      <p className="text-xs leading-relaxed text-fg">
+                        {creator.headline}
+                      </p>
+
+                      <div className="rounded-lg space-y-1 border border-line bg-sunken p-3 text-xs">
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted">Rate:</span>
+                          <span className="font-semibold text-fg">
+                            {creator.rates.primaryRate}{" "}
+                            <span className="font-normal text-muted">
+                              ({creator.rates.primaryUnit.slice(0, 16)}...)
+                            </span>
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted">Turnaround SLA:</span>
+                          <span className="font-semibold text-fg">
+                            {creator.rates.turnaround}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted">Portfolio Items:</span>
+                          <span className="font-semibold text-fg">
+                            {creator.works.length} verified pieces
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-5 flex items-center justify-end gap-2 border-t border-line pt-4">
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() =>
+                          handleOpenCustomPageForCreator(creator.id)
+                        }
+                      >
+                        🌐 View Custom Page
+                      </Button>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => handleInitiateContact(creator)}
+                      >
+                        ⚡ Contact Candidate
+                      </Button>
+                    </div>
+                  </Card>
+                );
+              })}
           </div>
         </main>
       )}
 
       {/* ========================================================================= */}
-      {/* 3. MANAGER HUB: DISCOVER N CREATORS, VIEW POSTS, GO TO SEPARATE PAGES     */}
-      {/* ========================================================================= */}
-      {activeRole === "manager" && (
-        <main className="mx-auto w-full max-w-6xl flex-1 space-y-8 px-4 py-8 sm:px-6">
-          {/* If inspecting an individual creator's separate page */}
-          {inspectedCreator ? (
-            <div className="space-y-6">
-              <div className="flex items-center justify-between border-b border-line pb-4">
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setInspectedCreatorId(null)}
-                >
-                  &larr; Back to Creators Feed
-                </Button>
-                <div className="text-xs text-muted">
-                  Viewing Separate Creator Page:{" "}
-                  <strong className="text-fg">{inspectedCreator.name}</strong>
-                </div>
-              </div>
-
-              {/* Creator Overview Card */}
-              <Card edge="accent" className="space-y-6 p-6 sm:p-8">
-                <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                  <div className="flex items-start gap-4">
-                    <Avatar name={inspectedCreator.name} size="lg" />
-                    <div className="space-y-2">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h2 className="font-display text-2xl font-bold">
-                          {inspectedCreator.name}
-                        </h2>
-                        <span className="font-mono text-xs text-muted">
-                          {inspectedCreator.handle}
-                        </span>
-                        <Badge tone="accent">{inspectedCreator.category}</Badge>
-                      </div>
-                      <p className="font-semibold text-fg">
-                        {inspectedCreator.headline}
-                      </p>
-                      <p className="text-xs text-muted">
-                        {inspectedCreator.location} &middot; Languages:{" "}
-                        {inspectedCreator.languages.join(", ")} &middot;{" "}
-                        {inspectedCreator.experienceYears} Years Exp
-                      </p>
-                      <p className="max-w-xl pt-1 text-sm leading-relaxed text-fg">
-                        {inspectedCreator.bio}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Rate Card & Actions */}
-                  <div className="shrink-0 space-y-3 rounded-md border border-line bg-sunken p-5 text-sm lg:w-80">
-                    <div className="text-xs font-bold text-muted uppercase">
-                      Verified Rate Card
-                    </div>
-                    <div>
-                      <span className="text-xs text-muted">Primary Rate:</span>
-                      <p className="font-display text-xl font-bold text-fg">
-                        {inspectedCreator.rates.primaryRate}
-                      </p>
-                      <span className="text-xs text-muted">
-                        {inspectedCreator.rates.primaryUnit}
-                      </span>
-                    </div>
-                    {inspectedCreator.rates.retainerRate && (
-                      <div className="border-t border-line/60 pt-2 text-xs">
-                        <span className="text-muted">Retainer:</span>
-                        <p className="font-bold text-fg">
-                          {inspectedCreator.rates.retainerRate}
-                        </p>
-                      </div>
-                    )}
-                    <div className="border-t border-line/60 pt-2 text-xs text-muted">
-                      Turnaround SLA:{" "}
-                      <strong className="text-fg">
-                        {inspectedCreator.rates.turnaround}
-                      </strong>
-                    </div>
-
-                    <div className="flex flex-col gap-2 pt-2">
-                      <Button
-                        variant="primary"
-                        className="w-full text-xs"
-                        onClick={() => {
-                          setContactTargetCreator(inspectedCreator);
-                          setContactRequestedSuccess(false);
-                          setContactModalOpen(true);
-                        }}
-                      >
-                        Request Contact Details
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        className="w-full text-xs"
-                        onClick={() =>
-                          handleToggleShortlist(inspectedCreator.id)
-                        }
-                      >
-                        {shortlistedCreatorIds.includes(inspectedCreator.id)
-                          ? "✓ Shortlisted"
-                          : "+ Add to Candidate Shortlist"}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-
-              {/* Creator's Full Portfolio Samples */}
-              <div className="space-y-4">
-                <h3 className="font-display text-xl font-bold">
-                  {inspectedCreator.name}&apos;s Portfolio Cuts (
-                  {inspectedCreator.works.length})
-                </h3>
-
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {inspectedCreator.works.map((w) => (
-                    <Card
-                      key={w.id}
-                      edge="accent"
-                      className="flex flex-col justify-between overflow-hidden p-0"
-                    >
-                      <div className="relative aspect-video w-full bg-sunken">
-                        <img
-                          src={w.thumbnailUrl}
-                          alt={w.title}
-                          className="h-full w-full object-cover"
-                        />
-                        <div className="rounded absolute bottom-2 left-2 bg-fg/80 px-2 py-0.5 text-xs font-semibold text-bg backdrop-blur-xs">
-                          {w.views}
-                        </div>
-                        {w.retention && (
-                          <div className="rounded absolute top-2 right-2 bg-accent px-2 py-0.5 text-xs font-bold text-on-accent">
-                            {w.retention}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="space-y-2 p-5">
-                        <div className="flex items-center justify-between text-xs text-muted">
-                          <span>{w.category}</span>
-                          <span>SLA: {w.turnaround}</span>
-                        </div>
-                        <h4 className="font-display text-base font-bold text-fg">
-                          {w.title}
-                        </h4>
-                        <p className="text-xs text-muted">Role: {w.role}</p>
-
-                        <div className="flex flex-wrap gap-1">
-                          {w.tools.map((t) => (
-                            <Badge key={t} tone="neutral" className="text-xs">
-                              {t}
-                            </Badge>
-                          ))}
-                        </div>
-
-                        {w.confirmedCollab && (
-                          <div className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-success">
-                            <CheckIcon className="size-4 shrink-0" />
-                            <span>
-                              Confirmed by {w.confirmedCollab.channelName}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : (
-            /* Manager Feed: All N Creators and Their Live Updates */
-            <div className="space-y-6">
-              <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-                <div>
-                  <h2 className="font-display text-2xl font-bold sm:text-3xl">
-                    Manager &amp; Agency Hub
-                  </h2>
-                  <p className="text-sm text-muted">
-                    Discover {creators.length} verified creators, watch live
-                    portfolio updates, and inspect their separate pages.
-                  </p>
-                </div>
-                {shortlistedCreatorIds.length > 0 && (
-                  <Badge tone="success" className="text-xs">
-                    {shortlistedCreatorIds.length} Candidate(s) Shortlisted
-                  </Badge>
-                )}
-              </div>
-
-              {/* Filter Pills */}
-              <div className="flex flex-wrap items-center gap-2 border-y border-line py-3">
-                <span className="text-xs font-semibold text-muted">
-                  Filter Creator Role:
-                </span>
-                {[
-                  "All",
-                  "Video Editing",
-                  "Thumbnail Design",
-                  "Scriptwriting",
-                  "Motion Graphics",
-                ].map((filter) => (
-                  <button
-                    key={filter}
-                    type="button"
-                    onClick={() => setManagerFilter(filter)}
-                    className={`rounded-md px-3 py-1 text-xs font-semibold transition-colors ${
-                      managerFilter === filter
-                        ? "bg-primary text-on-primary"
-                        : "border border-line bg-surface text-fg hover:bg-sunken"
-                    }`}
-                  >
-                    {filter}
-                  </button>
-                ))}
-              </div>
-
-              {/* Feed of Creators with Live Updates */}
-              <div className="grid gap-6 md:grid-cols-2">
-                {creators
-                  .filter(
-                    (c) =>
-                      managerFilter === "All" || c.category === managerFilter,
-                  )
-                  .map((creator) => (
-                    <Card
-                      key={creator.id}
-                      edge="accent"
-                      className="flex cursor-pointer flex-col justify-between space-y-4 p-6 transition-all hover:border-line-strong"
-                      onClick={() => {
-                        setInspectedCreatorId(creator.id);
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                      }}
-                    >
-                      <div className="space-y-3">
-                        {/* Header */}
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-3">
-                            <Avatar name={creator.name} size="md" />
-                            <div>
-                              <div className="flex items-center gap-1.5">
-                                <span className="font-display font-bold text-fg">
-                                  {creator.name}
-                                </span>
-                                <CheckIcon className="size-3.5 text-success" />
-                              </div>
-                              <span className="text-xs text-muted">
-                                {creator.handle} &middot; {creator.location}
-                              </span>
-                            </div>
-                          </div>
-                          <Badge tone="accent" className="text-xs">
-                            {creator.category}
-                          </Badge>
-                        </div>
-
-                        {/* Recent Broadcast / Update */}
-                        <div className="rounded space-y-1 border border-line bg-sunken p-2.5 text-xs">
-                          <div className="flex items-center justify-between text-muted">
-                            <span>Latest Update:</span>
-                            <span className="font-mono">
-                              {creator.lastUpdated}
-                            </span>
-                          </div>
-                          <p className="font-semibold text-fg italic">
-                            &ldquo;{creator.latestUpdateNote}&rdquo;
-                          </p>
-                        </div>
-
-                        {/* Rate and SLA */}
-                        <div className="flex items-center justify-between border-y border-line py-2 text-xs">
-                          <div>
-                            <span className="text-muted">Primary Rate:</span>
-                            <strong className="ml-1 text-fg">
-                              {creator.rates.primaryRate}
-                            </strong>
-                          </div>
-                          <div>
-                            <span className="text-muted">SLA:</span>
-                            <strong className="ml-1 text-fg">
-                              {creator.rates.turnaround}
-                            </strong>
-                          </div>
-                        </div>
-
-                        {/* Recent Work Preview Thumbnails */}
-                        <div>
-                          <span className="text-xs font-semibold text-muted">
-                            Recent Works ({creator.works.length}):
-                          </span>
-                          <div className="mt-1.5 grid grid-cols-2 gap-2">
-                            {creator.works.slice(0, 2).map((w) => (
-                              <div
-                                key={w.id}
-                                className="rounded relative aspect-video overflow-hidden bg-sunken"
-                              >
-                                <img
-                                  src={w.thumbnailUrl}
-                                  alt={w.title}
-                                  className="h-full w-full object-cover"
-                                />
-                                <div className="rounded absolute bottom-1 left-1 bg-fg/80 px-1 py-0.5 text-[10px] text-bg">
-                                  {w.views}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Action */}
-                      <div className="flex items-center justify-between border-t border-line pt-3 text-xs">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggleShortlist(creator.id);
-                          }}
-                          className={`font-semibold hover:underline ${
-                            shortlistedCreatorIds.includes(creator.id)
-                              ? "font-bold text-success"
-                              : "text-muted"
-                          }`}
-                        >
-                          {shortlistedCreatorIds.includes(creator.id)
-                            ? "✓ Shortlisted"
-                            : "+ Shortlist"}
-                        </button>
-
-                        <Button
-                          size="sm"
-                          variant="primary"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setInspectedCreatorId(creator.id);
-                            window.scrollTo({ top: 0, behavior: "smooth" });
-                          }}
-                        >
-                          Open Creator Page &rarr;
-                        </Button>
-                      </div>
-                    </Card>
-                  ))}
-              </div>
-            </div>
-          )}
-        </main>
-      )}
-
-      {/* ========================================================================= */}
-      {/* MODAL: ADD / EDIT WORK (IN CREATOR STUDIO)                                 */}
+      {/* MODAL: ADD / EDIT PORTFOLIO ITEM                                          */}
       {/* ========================================================================= */}
       <Dialog open={editWorkModalOpen} onOpenChange={setEditWorkModalOpen}>
         <DialogContent
           title={
-            editingWorkId ? "Edit Portfolio Work" : "Add New Work to Portfolio"
+            editingWorkId ? "Edit Portfolio Item" : "Add Work Item to Portfolio"
           }
-          description="Changes update in real-time and will be broadcasted to all Managers on Workaora."
-          className="sm:max-w-lg"
+          description="Highlight your client collaboration, retention proof, and turnaround SLA."
+          className="sm:max-w-md"
         >
           <div className="space-y-4">
-            <Field label="Work / Project Title">
+            <Field label="Work Title">
               {(control) => (
                 <Input
                   {...control}
                   value={formTitle}
                   onChange={(e) => setFormTitle(e.target.value)}
-                  placeholder="e.g. 1M+ Views Pacing Edit: Rise of Esports"
+                  placeholder="e.g. 1.4M View Esports Documentary Cut"
                 />
               )}
             </Field>
@@ -1304,13 +1133,13 @@ function PrototypeInner() {
                     onChange={(e) => setFormCategory(e.target.value)}
                   >
                     <option value="Long-form YouTube">Long-form YouTube</option>
-                    <option value="Finance Breakdown">Finance Breakdown</option>
-                    <option value="Gaming / Esports">Gaming / Esports</option>
+                    <option value="Shorts / Reels">Shorts / Reels</option>
                     <option value="Thumbnail Design">Thumbnail Design</option>
-                    <option value="Motion Graphics">Motion Graphics</option>
+                    <option value="3D Art & Motion">3D Art &amp; Motion</option>
                   </Select>
                 )}
               </Field>
+
               <Field label="Turnaround SLA">
                 {(control) => (
                   <Input
@@ -1324,17 +1153,7 @@ function PrototypeInner() {
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <Field label="View Count">
-                {(control) => (
-                  <Input
-                    {...control}
-                    value={formViews}
-                    onChange={(e) => setFormViews(e.target.value)}
-                    placeholder="1.4M views"
-                  />
-                )}
-              </Field>
-              <Field label="Retention Metric">
+              <Field label="Retention / CTR Metric">
                 {(control) => (
                   <Input
                     {...control}
@@ -1344,9 +1163,19 @@ function PrototypeInner() {
                   />
                 )}
               </Field>
+              <Field label="Views Metric">
+                {(control) => (
+                  <Input
+                    {...control}
+                    value={formViews}
+                    onChange={(e) => setFormViews(e.target.value)}
+                    placeholder="1.4M views"
+                  />
+                )}
+              </Field>
             </div>
 
-            <Field label="Thumbnail Image URL">
+            <Field label="Preview Image URL">
               {(control) => (
                 <Input
                   {...control}
@@ -1365,7 +1194,7 @@ function PrototypeInner() {
                 Cancel
               </Button>
               <Button variant="primary" onClick={handleSaveWork}>
-                {editingWorkId ? "Save Changes" : "Publish to Portfolio"}
+                Save Work
               </Button>
             </div>
           </div>
@@ -1373,16 +1202,16 @@ function PrototypeInner() {
       </Dialog>
 
       {/* ========================================================================= */}
-      {/* MODAL: EDIT RATE CARD (IN CREATOR STUDIO)                                 */}
+      {/* MODAL: EDIT RATE CARD                                                     */}
       {/* ========================================================================= */}
       <Dialog open={rateCardModalOpen} onOpenChange={setRateCardModalOpen}>
         <DialogContent
-          title="Edit Transparent Rate Card"
-          description="Set your verified public rates. Managers see these rates directly when reviewing you."
+          title="Configure Transparent Rate Card"
+          description="Set your standard project rate, retainer pricing, and turnaround SLA."
           className="sm:max-w-md"
         >
           <div className="space-y-4">
-            <Field label="Primary Rate (₹)">
+            <Field label="Standard Project Rate">
               {(control) => (
                 <Input
                   {...control}
@@ -1392,7 +1221,8 @@ function PrototypeInner() {
                 />
               )}
             </Field>
-            <Field label="Per Unit Structure">
+
+            <Field label="Rate Unit / Deliverable">
               {(control) => (
                 <Input
                   {...control}
@@ -1402,6 +1232,7 @@ function PrototypeInner() {
                 />
               )}
             </Field>
+
             <Field label="Monthly Retainer (optional)">
               {(control) => (
                 <Input
@@ -1412,6 +1243,7 @@ function PrototypeInner() {
                 />
               )}
             </Field>
+
             <Field label="Guaranteed Turnaround SLA">
               {(control) => (
                 <Input
@@ -1451,7 +1283,7 @@ function PrototypeInner() {
           description={
             contactRequestedSuccess
               ? "Candidate has been notified and can release WhatsApp/Email directly to you."
-              : "In accordance with India's DPDP Act, creator phone numbers are private until requested."
+              : "In accordance with India's DPDP Act, creator contact details are private until requested."
           }
           className="sm:max-w-md"
         >
@@ -1467,7 +1299,7 @@ function PrototypeInner() {
 
               <p className="text-xs leading-relaxed text-muted">
                 Workaora will notify {contactTargetCreator.name} to release
-                their WhatsApp and Email for direct off-platform communication.
+                their WhatsApp and Email for direct communication.
               </p>
 
               <div className="flex justify-end gap-3 border-t border-line pt-4">
