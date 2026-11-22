@@ -9,7 +9,7 @@
 | 1.3 Project structure and security guard-rails | Done 22 Nov 2026 |
 | 1.4 Supabase development project | Done 22 Nov 2026 |
 | 1.5 First database migrations | Done 22 Nov 2026 |
-| 1.6 Design direction and design system | Next (needs the founder's choice) |
+| 1.6 Design direction and design system | In progress: three directions built at `/dev/directions`; waiting for the founder's choice |
 | 1.7–1.8 | Not started |
 
 **Cost:** ₹0. Everything runs on your computer or on free tiers. Nothing is hosted publicly (D-032).
