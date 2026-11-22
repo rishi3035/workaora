@@ -2,7 +2,7 @@
 
 An India-first, work-first professional network and hiring platform for the creator economy and esports industry.
 
-**Status:** Phase 1 (Foundation) is complete and approved (22 Nov 2026). Phase 2 (sign-up, login and age-aware onboarding) has not started. The app has a placeholder home page, a design system, a development database with its first three tables, and automatic checks. It has no user-facing features yet. Validation and legal review are still outstanding (see D-039).
+**Status:** Phase 1 (Foundation) is complete and approved (22 Nov 2026). Phase 2 (sign-up, login and age-aware onboarding) is planned and awaiting approval; nothing in it is built. The app has a placeholder home page, a design system, a development database with its first three tables, and automatic checks. It has no user-facing features yet. Validation and legal review are still outstanding (see D-039).
 
 **New to the project?** Start with [docs/ENVIRONMENT_SETUP.md](docs/ENVIRONMENT_SETUP.md), then [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
@@ -37,7 +37,9 @@ The checks run after the upload, so run `npm run check` yourself first. The data
 
 | Document | What it covers |
 |----------|----------------|
-| [docs/PHASE_1_PLAN.md](docs/PHASE_1_PLAN.md) | The current phase: steps, acceptance checks and progress |
+| [docs/PHASE_2_PLAN.md](docs/PHASE_2_PLAN.md) | The next phase: accounts, login and age-aware onboarding. Proposed. |
+| [docs/PRODUCT_REQUIREMENTS.md](docs/PRODUCT_REQUIREMENTS.md) | What each feature must do, from the user's point of view |
+| [docs/PHASE_1_PLAN.md](docs/PHASE_1_PLAN.md) | Phase 1 (Foundation): complete. Steps, acceptance checks and results. |
 | [docs/PHASE_0_PLAN.md](docs/PHASE_0_PLAN.md) | Business analysis, MVP scope, architecture, data and security model, roadmap, budget, validation plan |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How the app is put together, the folder map, and the rules that keep it safe and tidy |
 | [docs/ENVIRONMENT_SETUP.md](docs/ENVIRONMENT_SETUP.md) | Setting up a computer from nothing, everyday commands, troubleshooting |
@@ -49,7 +51,7 @@ The checks run after the upload, so run `npm run check` yourself first. The data
 | [docs/LEGAL_QUESTIONS.md](docs/LEGAL_QUESTIONS.md) | Questions for qualified Indian counsel |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | What changed, and when |
 
-Still to come: product requirements (start of Phase 2), deployment guide and runbooks (Phases 8 and 10). See PHASE_0_PLAN §9.4.
+Still to come: deployment guide and runbooks (Phases 8 and 10). See PHASE_0_PLAN §9.4.
 
 ## Ground rules
 

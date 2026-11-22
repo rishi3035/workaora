@@ -2,6 +2,12 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 2 planned (not started)
+
+- Added `PRODUCT_REQUIREMENTS.md` with the requirements for accounts, login and age-aware onboarding.
+- Added `PHASE_2_PLAN.md`: ten steps with acceptance checks.
+- Proposed decisions D-046 to D-054. All await the founder's approval.
+
 ## 2026-11-22: Phase 1 approved
 
 - The founder approved Phase 1 (Foundation) as complete.

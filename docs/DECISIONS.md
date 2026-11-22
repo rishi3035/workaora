@@ -12,7 +12,7 @@ Every important product, technical, legal or financial decision is recorded here
 When a decision changes, the old text stays in the entry's history with the reason for the change.
 Full reasoning is in `PHASE_0_PLAN.md` (section numbers in brackets). Legal points are tracked in `LEGAL_QUESTIONS.md`.
 
-**Last updated:** 22 November 2026 (D-038 brand name, D-039 early foundation work)
+**Last updated:** 22 November 2026 (Phase 1 complete; Phase 2 decisions D-046 to D-054 proposed)
 
 ---
 
@@ -65,6 +65,15 @@ Full reasoning is in `PHASE_0_PLAN.md` (section numbers in brackets). Legal poin
 | D-043 | App settings are public, non-secret switches readable by everyone | Accepted |
 | D-044 | Visual direction: Studio's fonts and colours with Arena's shapes | Accepted |
 | D-045 | Links and quiet buttons are ink-coloured with a red underline; red text is kept for errors | Accepted |
+| D-046 | Sign-up asks for date of birth before email | Proposed |
+| D-047 | While minors' sign-up is off, everyone under 18 is refused with one neutral message; no waiting list | Proposed |
+| D-048 | After an age refusal, sign-up is blocked on that device for 24 hours | Proposed |
+| D-049 | A self-declared date of birth is the only age check for adults in Phase 2 | Proposed |
+| D-050 | Unfinished sign-ups are deleted after 7 days | Proposed |
+| D-051 | Sign-in methods: email with password, and Google | Proposed |
+| D-052 | Passwords: at least 10 characters, no forced symbols | Proposed |
+| D-053 | Draft Terms and Privacy Notice, labelled as drafts, until a lawyer reviews them | Proposed |
+| D-054 | Supabase's test email sender first; Resend at step 2.9 or just before closed beta | Proposed |
 
 ---
 
@@ -385,6 +394,59 @@ Options:
 - **Why:** error messages are also red. Red links next to red errors would make it hard to tell "something is wrong" from "you can click this", especially for people who see colour differently.
 - **Status note:** implemented in Phase 1 step 1.6. Confirmed by the founder on 22 Nov 2026.
 
+## Phase 2 decisions (proposed 22 Nov 2026)
+
+These come from `PHASE_2_PLAN.md`. None is built. Each needs the founder's approval.
+
+### D-046 · Date of birth before email · **Proposed**
+- **What:** the first sign-up screen asks only for a date of birth. Email and password, or Google, come second.
+- **Why:** we never collect an email address from someone we then turn away. That is the least data we can hold about a person who cannot have an account.
+- **Also:** the database checks the age again once the account exists. The first screen is a courtesy; the database's check is the one that counts.
+- **Cost:** one extra screen before sign-up.
+
+### D-047 · One neutral refusal for everyone under 18, for now · **Proposed**
+- **What:** while sign-up for 16–17-year-olds is off (D-022), anyone under 18 sees the same message as anyone under 16: "Sorry, we can't create an account for you right now." The message does not say which age would be accepted.
+- **No waiting list for 16–17-year-olds.** Keeping their email to tell them when sign-up opens would mean holding a minor's personal data without a guardian's consent.
+- **In Phase 2 the age check does not read the switch.** Turning the switch on would change nothing until Phase 11 replaces the check.
+- **Trade-off:** interested 16–17-year-olds are turned away with no way to hear back. That is the price of not holding their data.
+
+### D-048 · A 24-hour retry block on the device · **Proposed**
+- **What:** after a refusal, a marker is stored in that browser for 24 hours, and the sign-up form stays unavailable there. The marker holds no date of birth and nothing identifying. Nothing is stored on our servers.
+- **Why:** without it, a person could change the year and try again immediately.
+- **Honest limit:** it is easily bypassed by clearing the browser's data or using another device. It discourages; it does not prevent.
+- **Needs the lawyer:** whether even this marker is acceptable, and whether a notice is required (`LEGAL_QUESTIONS.md` A7).
+- **Alternative:** no marker at all.
+
+### D-049 · Self-declared age for adults in Phase 2 · **Proposed**
+- **What:** an adult's age is established only by the date of birth they type. The system records the method ("self-declared") against each account.
+- **Why now:** no stronger method can be chosen until the lawyer says what is expected (`LEGAL_QUESTIONS.md` A3). Recording the method means accounts can be re-checked later if the rule changes.
+- **Not assumed to be legally sufficient** (D-012). No real user signs up before the lawyer has answered.
+
+### D-050 · Delete unfinished sign-ups after 7 days · **Proposed**
+- **What:** an account that has not finished the age check and onboarding within 7 days is deleted automatically, with its email address.
+- **Why:** an unfinished sign-up is personal data with no purpose. This also clears unconfirmed and abandoned accounts.
+- **Alternatives:** a shorter or longer period. The retention period is a question for the lawyer (B6).
+
+### D-051 · Sign-in methods · **Proposed**
+- **What:** email with password, and Google. No phone codes and no emailed login links in Phase 2.
+- **Why:** phone codes cost money per message in India and need telecom registration (already deferred in `PHASE_0_PLAN.md` §2.3). Emailed login links depend entirely on email delivery, which is not production-ready yet.
+- **Later option:** two-step login for users, and for staff before any real moderation happens.
+
+### D-052 · Password rules · **Proposed**
+- **What:** at least 10 characters. No forced mix of capitals, digits or symbols.
+- **Why:** the US standards body NIST advises against composition rules (SP 800-63B): they lead to predictable patterns and reuse. Length matters more.
+- **Also:** checking passwords against lists of leaked ones is available on Supabase's paid plan only. Turn it on when the production database is created (D-033).
+
+### D-053 · Draft legal pages · **Proposed**
+- **What:** Phase 2 includes a Terms page and a Privacy Notice page written as honest drafts, each headed "Draft: not yet reviewed by a lawyer", each with a version label. Agreement to each is recorded with its version.
+- **Why:** the consent recording has to be built and tested against something. A draft that says it is a draft is honest.
+- **Hard rule:** no real user signs up until a lawyer has reviewed them (Gate 2).
+
+### D-054 · Email delivery timing · **Proposed (founder to choose)**
+- **What:** build and test with Supabase's built-in sender, which reaches only the founder's own address at about 2 emails an hour. Move to Resend with `workaora.co.in` either at step 2.9, or just before closed beta.
+- **Trade-off:** doing it at 2.9 proves real delivery early and needs DNS changes now. Doing it later keeps Phase 2 shorter, at the risk of finding delivery problems late.
+- **Recommendation:** do it at 2.9.
+
 ---
 
 ## Change history
@@ -398,3 +460,4 @@ Options:
 | 2026-11-22 | D-040 (new Supabase keys only) proposed, then accepted by the founder | Supabase is retiring the old keys by end of 2026 |
 | 2026-11-22 | D-041, D-042, D-043 accepted | Founder reviewed them with the step 1.5 migrations and approved applying them |
 | 2026-11-22 | D-044 accepted (visual direction); D-045 proposed, then accepted (ink-coloured links) | Founder chose the mix from a live preview; D-045 arose while building the design system |
+| 2026-11-22 | D-046 to D-054 added as Proposed | Phase 2 plan written for the founder's review |
