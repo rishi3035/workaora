@@ -9,8 +9,9 @@
 | 1.3 Project structure and security guard-rails | Done 22 Nov 2026 |
 | 1.4 Supabase development project | Done 22 Nov 2026 |
 | 1.5 First database migrations | Done 22 Nov 2026 |
-| 1.6 Design direction and design system | In progress: three directions built at `/dev/directions`; waiting for the founder's choice |
-| 1.7–1.8 | Not started |
+| 1.6 Design direction and design system | Done 22 Nov 2026 |
+| 1.7 Automatic checks on GitHub (CI) | Next |
+| 1.8 Documentation | Partly done as each step finished; the rest is not started |
 
 **Cost:** ₹0. Everything runs on your computer or on free tiers. Nothing is hosted publicly (D-032).
 **Estimate:** about 3 focused weeks, roughly 5–6 calendar weeks at ~20 hours/week. Most of your time goes on reviewing, learning and checking, not typing code.
@@ -166,6 +167,17 @@ Each step ends with acceptance checks. The step is done only when they all pass 
   - an automated accessibility scan of the style-guide page reports no serious issues;
   - every component works with keyboard only.
 - **You'll learn:** what a design system is, and why consistency makes the product feel premium.
+- **Result (22 Nov 2026):** done. Full details are in `docs/DESIGN_SYSTEM.md`.
+  - **Direction chosen (D-044).** Three directions were built as a live preview: Studio, Arena and Signal. The founder asked for a mix: Studio's fonts and colours with Arena's shapes. The mix was built as a fourth option and approved. The temporary preview page has been deleted.
+  - **Tokens** in `src/app/globals.css`: colours with light and dark values, two brand fonts, four Indian-script fallback fonts, text sizes, corner sizes. Tailwind's built-in colours are switched off.
+  - **Components** in `src/ui/`: Button, ButtonLink, Field, Input, Textarea, Select, Checkbox, Card, Badge, Avatar, Dialog, Toast, Skeleton, LoadingRegion, EmptyState, ErrorState.
+  - **Style guide** at `/dev/styleguide`, with a theme switch and a built-in accessibility scan. It uses a new rule: a page named `page.dev.tsx` exists only while developing and is left out of production builds entirely.
+  - **Accessibility:** every text colour pair measures at least 4.5 to 1 in light and dark; the automated scan (27 rules, WCAG A and AA) finds no issues in either theme; keyboard use is covered by tests.
+  - **28 new tests** (71 in total in `npm run check`).
+  - **Bugs found and fixed while checking:** wide Tamil initials overflowed the avatar, so wide multi-part characters now show one initial; a checkbox's description was being read as part of its name.
+  - **Changed from the preview (D-045):** links and quiet buttons are ink-coloured with a red underline, not red text. Red text is kept for errors.
+  - **Not checked:** a real screen reader, a real phone, real users.
+  - **Avatar photos** are left for Phase 3, when image storage exists.
 
 ### 1.7 Automatic checks on GitHub (CI)
 

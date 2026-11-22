@@ -63,6 +63,8 @@ Full reasoning is in `PHASE_0_PLAN.md` (section numbers in brackets). Legal poin
 | D-041 | Staff roles can be granted by our server through an audited function, not only by hand | Accepted |
 | D-042 | Only admins can change app settings; moderators cannot | Accepted |
 | D-043 | App settings are public, non-secret switches readable by everyone | Accepted |
+| D-044 | Visual direction: Studio's fonts and colours with Arena's shapes | Accepted |
+| D-045 | Links and quiet buttons are ink-coloured with a red underline; red text is kept for errors | Proposed |
 
 ---
 
@@ -373,6 +375,16 @@ Options:
 - Anyone, including a visitor who is not logged in, can read `app_settings`. They are on/off switches the pages need, not secrets.
 - **Rule:** never store a secret in this table. Secrets live in environment settings.
 
+### D-044 · Visual direction · **Accepted**
+- **What:** Studio's fonts (Bricolage Grotesque, Instrument Sans) and colours (warm paper, ink, one red) with Arena's shapes (4px corners, soft outlines, a red bar on the left edge of cards). Light and dark versions.
+- **How it was chosen:** three directions (Studio, Arena, Signal) were built as a live preview. The founder chose a mix, reviewed it as a fourth option, and approved it on 22 Nov 2026.
+- **Recorded in:** `docs/DESIGN_SYSTEM.md`.
+
+### D-045 · Links are ink-coloured, not red · **Proposed**
+- **What changed from the approved preview:** in the preview, links and quiet buttons ("View all", "Save") were red text. In the design system they are ink-coloured with a red underline.
+- **Why:** error messages are also red. Red links next to red errors would make it hard to tell "something is wrong" from "you can click this", especially for people who see colour differently.
+- **Status note:** implemented as the safer default. Awaiting founder confirmation; it is a small change to reverse.
+
 ---
 
 ## Change history
@@ -385,3 +397,4 @@ Options:
 | 2026-11-22 | D-038 (Workaora) and D-039 (₹0 foundation work before validation) accepted; D-021 path set to `C:\dev\workaora` | Founder instruction after choosing the name |
 | 2026-11-22 | D-040 (new Supabase keys only) proposed, then accepted by the founder | Supabase is retiring the old keys by end of 2026 |
 | 2026-11-22 | D-041, D-042, D-043 accepted | Founder reviewed them with the step 1.5 migrations and approved applying them |
+| 2026-11-22 | D-044 accepted (visual direction); D-045 proposed (ink-coloured links) | Founder chose the mix from a live preview; D-045 arose while building the design system |

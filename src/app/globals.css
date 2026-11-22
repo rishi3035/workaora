@@ -1,26 +1,226 @@
 @import "tailwindcss";
 
+/*
+ * WORKAORA DESIGN TOKENS
+ *
+ * A "token" is a named design decision: a colour, a font, a corner size.
+ * Every screen uses these names instead of one-off values, so the product
+ * stays consistent and a change here changes it everywhere.
+ *
+ * Chosen by the founder on 22 Nov 2026 (decision D-044): Studio's fonts and
+ * colours with Arena's shapes.
+ *
+ * Section 1 holds the raw colour values for light and dark.
+ * Section 2 gives them the names used in the code (for example bg-surface).
+ */
+
+/* ------------------------------------------------------------------ */
+/* 1. Colour values                                                    */
+/* ------------------------------------------------------------------ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --wk-bg: #faf7f2; /* the page: warm paper */
+  --wk-surface: #ffffff; /* cards and panels */
+  --wk-sunken: #f1ece3; /* recessed areas: placeholders, disabled fields */
+  --wk-fg: #1b1a17; /* main text: ink */
+  --wk-muted: #625d55; /* secondary text */
+  --wk-line: #ddd6ca; /* soft outlines and dividers */
+  --wk-line-strong: #8a8378; /* outlines of fields, which must be easy to see */
+
+  --wk-primary: #1b1a17; /* main buttons */
+  --wk-primary-hover: #3a3731;
+  --wk-on-primary: #faf7f2;
+
+  --wk-accent: #c9321a; /* the brand red: card edges, highlights */
+  --wk-on-accent: #ffffff;
+
+  --wk-success: #1f6b45;
+  --wk-success-soft: #e2f1e8;
+  --wk-warning: #7a4f00;
+  --wk-warning-soft: #fbefd3;
+  --wk-danger: #b3261e;
+  --wk-danger-hover: #8f1d17;
+  --wk-danger-soft: #fbe6e3;
+  --wk-on-danger: #ffffff;
+
+  --wk-focus: #1b1a17; /* the outline shown around the item in keyboard focus */
+  --wk-overlay: rgb(27 26 23 / 55%); /* dims the page behind a dialog */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* Dark values. Used when the device is set to dark, unless light is forced. */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --wk-bg: #141311;
+    --wk-surface: #1c1a17;
+    --wk-sunken: #26231f;
+    --wk-fg: #f2eee6;
+    --wk-muted: #aaa397;
+    --wk-line: #35312b;
+    --wk-line-strong: #847d72;
+
+    --wk-primary: #f2eee6;
+    --wk-primary-hover: #d9d4c9;
+    --wk-on-primary: #141311;
+
+    --wk-accent: #ff6a4d;
+    --wk-on-accent: #141311;
+
+    --wk-success: #6fcf9b;
+    --wk-success-soft: #172a20;
+    --wk-warning: #f0c060;
+    --wk-warning-soft: #2c2311;
+    --wk-danger: #ff8a72;
+    --wk-danger-hover: #ffa794;
+    --wk-danger-soft: #2f1a16;
+    --wk-on-danger: #141311;
+
+    --wk-focus: #f2eee6;
+    --wk-overlay: rgb(0 0 0 / 65%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+/* The same dark values, when dark is chosen explicitly. Keep both in step. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --wk-bg: #141311;
+  --wk-surface: #1c1a17;
+  --wk-sunken: #26231f;
+  --wk-fg: #f2eee6;
+  --wk-muted: #aaa397;
+  --wk-line: #35312b;
+  --wk-line-strong: #847d72;
+
+  --wk-primary: #f2eee6;
+  --wk-primary-hover: #d9d4c9;
+  --wk-on-primary: #141311;
+
+  --wk-accent: #ff6a4d;
+  --wk-on-accent: #141311;
+
+  --wk-success: #6fcf9b;
+  --wk-success-soft: #172a20;
+  --wk-warning: #f0c060;
+  --wk-warning-soft: #2c2311;
+  --wk-danger: #ff8a72;
+  --wk-danger-hover: #ffa794;
+  --wk-danger-soft: #2f1a16;
+  --wk-on-danger: #141311;
+
+  --wk-focus: #f2eee6;
+  --wk-overlay: rgb(0 0 0 / 65%);
+}
+
+/* ------------------------------------------------------------------ */
+/* 2. Names used in the code                                           */
+/* ------------------------------------------------------------------ */
+
+@theme inline {
+  /* Remove Tailwind's built-in colours, so only Workaora's can be used. */
+  --color-*: initial;
+
+  --color-bg: var(--wk-bg);
+  --color-surface: var(--wk-surface);
+  --color-sunken: var(--wk-sunken);
+  --color-fg: var(--wk-fg);
+  --color-muted: var(--wk-muted);
+  --color-line: var(--wk-line);
+  --color-line-strong: var(--wk-line-strong);
+  --color-primary: var(--wk-primary);
+  --color-primary-hover: var(--wk-primary-hover);
+  --color-on-primary: var(--wk-on-primary);
+  --color-accent: var(--wk-accent);
+  --color-on-accent: var(--wk-on-accent);
+  --color-success: var(--wk-success);
+  --color-success-soft: var(--wk-success-soft);
+  --color-warning: var(--wk-warning);
+  --color-warning-soft: var(--wk-warning-soft);
+  --color-danger: var(--wk-danger);
+  --color-danger-hover: var(--wk-danger-hover);
+  --color-danger-soft: var(--wk-danger-soft);
+  --color-on-danger: var(--wk-on-danger);
+  --color-focus: var(--wk-focus);
+  --color-overlay: var(--wk-overlay);
+  --color-transparent: transparent;
+
+  /* Fonts. The Noto fonts make names in Indian scripts look right. */
+  --font-display:
+    var(--font-bricolage), var(--font-devanagari), var(--font-tamil),
+    var(--font-bengali), var(--font-telugu), Georgia, serif;
+  --font-sans:
+    var(--font-instrument), var(--font-devanagari), var(--font-tamil),
+    var(--font-bengali), var(--font-telugu), system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", monospace;
+}
+
+@theme {
+  /* Corners: almost square. */
+  --radius-*: initial;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-full: 9999px;
+
+  /* Shadows: none, except under dialogs and toasts that float above the page. */
+  --shadow-*: initial;
+  --shadow-overlay: 0 12px 40px rgb(0 0 0 / 22%);
+
+  /* Headline sizes (the expressive display font). */
+  --text-display-xl: clamp(2.5rem, 7vw, 4.5rem);
+  --text-display-xl--line-height: 1.05;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-lg: clamp(1.75rem, 4vw, 2.25rem);
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-display-md: 1.5rem;
+  --text-display-md--line-height: 1.15;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-sm: 1.25rem;
+  --text-display-sm--line-height: 1.2;
+  --text-display-sm--letter-spacing: -0.02em;
+
+  /* Small capital-letter labels. */
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.12em;
+  --text-label--font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ */
+/* 3. Defaults for every page                                          */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  body {
+    background: var(--wk-bg);
+    color: var(--wk-fg);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+  }
+
+  /* A clear outline on whatever has keyboard focus. Never remove this. */
+  :focus-visible {
+    outline: 2px solid var(--wk-focus);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--wk-fg);
+    color: var(--wk-bg);
+  }
+
+  /* Respect people who have asked their device for less motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }

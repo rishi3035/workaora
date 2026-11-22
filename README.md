@@ -13,7 +13,7 @@ Open a terminal in this folder (`C:\dev\workaora`), then:
 | Command | What it does |
 |---------|--------------|
 | `npm install` | Downloads the packages the app needs (first time, or after `package.json` changes) |
-| `npm run dev` | Starts the app at http://localhost:3000. Press Ctrl+C to stop. **Needs `.env.local`** (copy `.env.example` and fill it in); without it the app stops and tells you what is missing. |
+| `npm run dev` | Starts the app at http://localhost:3000. The style guide is at http://localhost:3000/dev/styleguide. Press Ctrl+C to stop. **Needs `.env.local`** (copy `.env.example` and fill it in); without it the app stops and tells you what is missing. |
 | `npm run check` | **Runs every check below in one go. Run this before saving work to Git.** |
 | `npm run format` | Tidies the code layout automatically |
 | `npm run format:check` | Reports files whose layout isn't tidy, without changing them |
@@ -31,6 +31,7 @@ Open a terminal in this folder (`C:\dev\workaora`), then:
 |----------|----------------|
 | [docs/PHASE_1_PLAN.md](docs/PHASE_1_PLAN.md) | The current phase: steps, acceptance checks and progress |
 | [docs/PHASE_0_PLAN.md](docs/PHASE_0_PLAN.md) | Business analysis, MVP scope, architecture, data and security model, roadmap, budget, validation plan |
+| [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) | How Workaora looks: colours, fonts, components, and what was checked for accessibility |
 | [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) | The tables that exist, who can do what, and how to change the database safely |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Every important decision, its status and history |
 | [docs/LEGAL_QUESTIONS.md](docs/LEGAL_QUESTIONS.md) | Questions for qualified Indian counsel |

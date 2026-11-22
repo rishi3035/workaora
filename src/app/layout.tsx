@@ -1,16 +1,59 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  Instrument_Sans,
+  Noto_Sans_Bengali,
+  Noto_Sans_Devanagari,
+  Noto_Sans_Tamil,
+  Noto_Sans_Telugu,
+} from "next/font/google";
+
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// The two brand fonts. Next.js downloads them once when the app is built and
+// serves them from our own address, so visitors' browsers never contact Google.
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+const body = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Fonts for names and text in Indian scripts. A browser fetches one of these
+// only if the page actually contains that script, so they cost nothing
+// otherwise. Other scripts fall back to the device's own fonts.
+const devanagari = Noto_Sans_Devanagari({
+  subsets: ["devanagari"],
+  variable: "--font-devanagari",
+  display: "swap",
+  preload: false,
 });
+const tamil = Noto_Sans_Tamil({
+  subsets: ["tamil"],
+  variable: "--font-tamil",
+  display: "swap",
+  preload: false,
+});
+const bengali = Noto_Sans_Bengali({
+  subsets: ["bengali"],
+  variable: "--font-bengali",
+  display: "swap",
+  preload: false,
+});
+const telugu = Noto_Sans_Telugu({
+  subsets: ["telugu"],
+  variable: "--font-telugu",
+  display: "swap",
+  preload: false,
+});
+
+const fontVariables = [display, body, devanagari, tamil, bengali, telugu]
+  .map((font) => font.variable)
+  .join(" ");
 
 export const metadata: Metadata = {
   title: {
@@ -25,10 +68,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en-IN"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en-IN" className={`${fontVariables} h-full antialiased`}>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

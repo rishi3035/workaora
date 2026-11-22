@@ -2,6 +2,16 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 1, step 1.6 (design system)
+
+- Visual direction chosen by the founder: Studio's fonts and colours with Arena's shapes (D-044).
+- Added design tokens, brand fonts and fonts for four Indian scripts.
+- Added the core components in `src/ui/` with 28 tests.
+- Added the development-only style guide at `/dev/styleguide` with a built-in accessibility scan.
+- Development-only pages now use the `page.dev.tsx` naming rule and are left out of production builds.
+- New packages: `radix-ui`, `clsx`, `tailwind-merge`; for testing: `axe-core`, `@testing-library/user-event`, `@testing-library/jest-dom`.
+- Added `docs/DESIGN_SYSTEM.md`. Removed the temporary design-direction preview.
+
 ## 2026-11-22: Phase 1, step 1.5 (first database tables)
 
 - Applied three migrations to the development database: `staff`, `audit_log`, `app_settings`, with their functions and rules.
