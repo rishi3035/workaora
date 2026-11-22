@@ -2,6 +2,15 @@
 
 All notable changes to Workaora are recorded here, newest first.
 
+## 2026-11-22: Phase 1, step 1.5 (first database tables)
+
+- Applied three migrations to the development database: `staff`, `audit_log`, `app_settings`, with their functions and rules.
+- Sign-up for 16–17-year-olds is stored as a server-side switch and is off.
+- Added 25 permission tests and a guard that keeps database tests on the development project.
+- Added `npm run db:types` and typed the three database connections.
+- Added `docs/DATABASE_SCHEMA.md`.
+- Decisions D-041 to D-043.
+
 ## 2026-11-22: Phase 1, step 1.4 complete (development database connected)
 
 - Development project `workaora-dev-mumbai` created by the founder in Mumbai (`ap-south-1`), replacing a first project that had been created in Seoul.

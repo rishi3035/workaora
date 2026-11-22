@@ -6,11 +6,24 @@
  */
 import { parsePublicEnv, parseServerEnv } from "@/lib/env/schema";
 
+import { DEV_PROJECT_REF } from "./dev-project";
+
 export type DbTestEnv = {
   url: string;
   publishableKey: string;
   secretKey: string;
 };
+
+/** True only if the address belongs to the registered development project. */
+export function isDevProjectUrl(url: string): boolean {
+  let hostname: string;
+  try {
+    hostname = new URL(url).hostname;
+  } catch {
+    return false;
+  }
+  return hostname === `${DEV_PROJECT_REF}.supabase.co`;
+}
 
 export function getDbTestEnv(): DbTestEnv {
   const publicEnv = parsePublicEnv({
@@ -21,6 +34,18 @@ export function getDbTestEnv(): DbTestEnv {
   const serverEnv = parseServerEnv({
     SUPABASE_SECRET_KEY: process.env.SUPABASE_SECRET_KEY,
   });
+
+  if (!isDevProjectUrl(publicEnv.NEXT_PUBLIC_SUPABASE_URL)) {
+    throw new Error(
+      [
+        "Database tests stopped: .env.local does not point at the development project.",
+        "",
+        "These tests create and delete test accounts, so they only ever run against",
+        `the registered development project (reference ${DEV_PROJECT_REF}).`,
+        "Check NEXT_PUBLIC_SUPABASE_URL in .env.local.",
+      ].join("\n"),
+    );
+  }
 
   return {
     url: publicEnv.NEXT_PUBLIC_SUPABASE_URL,

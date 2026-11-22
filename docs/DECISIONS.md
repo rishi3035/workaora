@@ -60,6 +60,9 @@ Full reasoning is in `PHASE_0_PLAN.md` (section numbers in brackets). Legal poin
 | D-038 | Brand name **Workaora**; domain `workaora.co.in` | Accepted |
 | D-039 | Start ₹0-cost foundation work before validation completes; gates for spending, minors and launch unchanged | Accepted |
 | D-040 | Use only Supabase's new publishable and secret keys; refuse the old anon/service_role keys | Accepted |
+| D-041 | Staff roles can be granted by our server through an audited function, not only by hand | Accepted |
+| D-042 | Only admins can change app settings; moderators cannot | Accepted |
+| D-043 | App settings are public, non-secret switches readable by everyone | Accepted |
 
 ---
 
@@ -355,6 +358,21 @@ Options:
 - **Status note:** implemented in Phase 1 step 1.3. Confirmed by the founder on 22 Nov 2026.
 - **Source:** https://supabase.com/docs/guides/getting-started/api-keys (checked 22 Nov 2026).
 
+### D-041 · Staff roles through an audited server function · **Accepted**
+- **What:** `public.set_staff_role` grants, changes or removes a staff role. It is callable only with the secret key, requires a reason, and every change is written to the audit log by a trigger.
+- **What changed:** the Phase 1 plan said staff would be granted only by hand in the Supabase dashboard.
+- **Why:** the permission tests need to create a test admin, and a future admin screen needs the same function.
+- **Trade-off accepted:** a leaked secret key could grant staff. A leaked secret key can already sign in as any user, so this adds little real risk. Protecting the secret key remains the priority (server-only lock, never in Git).
+- **Rule for callers:** server code must confirm the person asking is an admin before calling it.
+
+### D-042 · Only admins change app settings · **Accepted**
+- `public.set_app_setting` refuses moderators, ordinary users, visitors and the server itself. It needs a logged-in admin and a reason of at least 10 characters, and logs the old and new value.
+- **Why:** the switches include sign-up for 16–17-year-olds (D-022), which is too important for a moderator role.
+
+### D-043 · App settings are public · **Accepted**
+- Anyone, including a visitor who is not logged in, can read `app_settings`. They are on/off switches the pages need, not secrets.
+- **Rule:** never store a secret in this table. Secrets live in environment settings.
+
 ---
 
 ## Change history
@@ -366,3 +384,4 @@ Options:
 | 2026-11-22 | D-022–D-037 accepted as proposed; D-037 resolved as options (a)+(b)+(d) | Founder review round 2 |
 | 2026-11-22 | D-038 (Workaora) and D-039 (₹0 foundation work before validation) accepted; D-021 path set to `C:\dev\workaora` | Founder instruction after choosing the name |
 | 2026-11-22 | D-040 (new Supabase keys only) proposed, then accepted by the founder | Supabase is retiring the old keys by end of 2026 |
+| 2026-11-22 | D-041, D-042, D-043 accepted | Founder reviewed them with the step 1.5 migrations and approved applying them |

@@ -8,8 +8,9 @@
 | 1.2 Code-quality tools | Done 22 Nov 2026 |
 | 1.3 Project structure and security guard-rails | Done 22 Nov 2026 |
 | 1.4 Supabase development project | Done 22 Nov 2026 |
-| 1.5 First database migrations | Next |
-| 1.6–1.8 | Not started |
+| 1.5 First database migrations | Done 22 Nov 2026 |
+| 1.6 Design direction and design system | Next (needs the founder's choice) |
+| 1.7–1.8 | Not started |
 
 **Cost:** ₹0. Everything runs on your computer or on free tiers. Nothing is hosted publicly (D-032).
 **Estimate:** about 3 focused weeks, roughly 5–6 calendar weeks at ~20 hours/week. Most of your time goes on reviewing, learning and checking, not typing code.
@@ -136,6 +137,16 @@ Each step ends with acceptance checks. The step is done only when they all pass 
   - `minors_signup_enabled` starts as `false`.
 - **Acceptance:** all permission tests pass. You can see the tables in the Supabase dashboard.
 - **You'll learn:** tables, migrations, and Row Level Security, the most important security idea in the whole project.
+- **Result (22 Nov 2026):** done. Full details are in `docs/DATABASE_SCHEMA.md`.
+  - **Three migrations applied** to `workaora-dev-mumbai` after the founder reviewed and approved the SQL.
+  - **Rehearsed first** on a throwaway in-memory database: 38 of 38 checks passed. A dry run then confirmed which files would be applied.
+  - **28 database tests pass** against the real development database: 25 permission tests and 3 connection tests. Every refused action is checked against the database's own reason code, so a test cannot pass because of a typo.
+  - **Read back from the database:** Row Level Security is on for all three tables; visitors can read only `app_settings`; no outside role can insert, update, delete or truncate any table; `minors_signup_enabled` is `false`.
+  - **Clean state afterwards:** 0 accounts, 0 staff, no leftover test accounts.
+  - **Dev-only guard:** the database tests refuse to run against any project other than `aysjinjtabhgozxxffwa`. Seven offline tests cover the guard.
+  - **Typed connections:** `npm run db:types` generates `src/lib/supabase/database.types.ts`, and the three connections use it, so a misspelt table or column name is caught by the type-check.
+  - **Decisions made here** (accepted by the founder with the SQL): D-041, D-042, D-043.
+  - **Known limits:** the owner-blocking triggers on `audit_log` were checked in the rehearsal only; each test run leaves a few permanent entries in the development audit log.
 
 ### 1.6 Design direction and design system
 

@@ -22,6 +22,7 @@ Open a terminal in this folder (`C:\dev\workaora`), then:
 | `npm run test` | Runs the automated tests once |
 | `npm run test:watch` | Re-runs tests automatically as files change |
 | `npm run test:db` | Runs the database tests against the **development** database. Needs `.env.local` and an internet connection. Not part of `npm run check`. |
+| `npm run db:types` | Regenerates the TypeScript descriptions of the database tables. Run after every database change. |
 | `npm run build` | Builds the production version, to prove it compiles |
 
 ## Documentation
@@ -30,6 +31,7 @@ Open a terminal in this folder (`C:\dev\workaora`), then:
 |----------|----------------|
 | [docs/PHASE_1_PLAN.md](docs/PHASE_1_PLAN.md) | The current phase: steps, acceptance checks and progress |
 | [docs/PHASE_0_PLAN.md](docs/PHASE_0_PLAN.md) | Business analysis, MVP scope, architecture, data and security model, roadmap, budget, validation plan |
+| [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) | The tables that exist, who can do what, and how to change the database safely |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Every important decision, its status and history |
 | [docs/LEGAL_QUESTIONS.md](docs/LEGAL_QUESTIONS.md) | Questions for qualified Indian counsel |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | What changed, and when |
