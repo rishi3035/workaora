@@ -8,6 +8,8 @@ An India-first, work-first professional network and hiring platform for the crea
 
 Open a terminal in this folder (`C:\dev\workaora`), then:
 
+> **Windows PowerShell note.** If a command fails with "running scripts is disabled on this system", type `npm.cmd` instead of `npm`, and `npx.cmd` instead of `npx` (for example `npm.cmd run dev`). PowerShell is blocking its own script version of the command; the `.cmd` version does the same job.
+
 | Command | What it does |
 |---------|--------------|
 | `npm install` | Downloads the packages the app needs (first time, or after `package.json` changes) |
